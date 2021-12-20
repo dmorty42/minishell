@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2021/11/27 01:01:55 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/19 19:43:49 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "../libft/libft.h"
+//ilnurjan
+# include <dirent.h>
+# include <errno.h>
+//ilnurjan
 
 typedef struct s_env
 {
@@ -34,7 +38,11 @@ typedef struct s_node
 	char			**path;
 	char			**cmd;
 	int				cmd_num;
+	struct s_node	*next;
+	t_env			*temp_env;
+	
 }	t_node;
+
 
 t_env	*parse_env(t_node *data, char **str);
 int		ft_bigstr_len(char **str);
@@ -51,4 +59,11 @@ int		ifkey(char c);
 char	*find_value(char *key, t_env *env);
 char	**two_dim_work(char **array, char *str, int *j);
 void	check_semicolon(char *line, t_node *data);
+//ilnurjan
+int		ft_strcmp(const char *s1, const char *s2);
+void	pwd_f(void);
+int		isItBuildin(t_node *data);
+void	cmd_cd(t_node *data);
+t_node	*ft_lstnew_i(int content);
+//ilnurjan
 #endif

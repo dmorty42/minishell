@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+         #
+#    By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 23:22:12 by dmorty            #+#    #+#              #
-#    Updated: 2021/11/26 21:21:53 by dmorty           ###   ########.fr        #
+#    Updated: 2021/12/19 19:44:23 by bprovolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ SRCS	=	./srcs/main.c\
 			./srcs/parser_util.c\
 			./srcs/checking_str.c\
 			./srcs/two_dim.c\
-			
+			./utils/ft_strcmp.c\
+			./utils/ft_lstnew_i.c\
+			./functions/buildin.c\
+			./functions/cd_f.c	
 
 HEAD	=	./includes/minishell.h
 LIBFT	=	./libft/libft.a

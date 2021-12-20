@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:49:46 by dmorty            #+#    #+#             */
-/*   Updated: 2021/11/27 02:06:27 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/20 19:06:37 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,20 @@ void	execute_cmd(t_node *data, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		while (data->path[++i])
+		if (isItBuildin(data))
 		{
-			temp = NULL;
-			temp = ft_strjoin(data->path[i], "/");
-			temp = ft_strjoin(temp, data->cmd[0]);
-			if (access(temp, X_OK) == 0)
-				execve(temp, data->cmd, env);
+			while (data->path[++i])
+			{
+				temp = NULL;
+				temp = ft_strjoin(data->path[i], "/");
+				temp = ft_strjoin(temp, data->cmd[0]);
+				if (access(temp, X_OK) == 0)
+					// printf("sosi %s  \n", *env );
+					execve(temp, data->cmd, env);
+			}
+			printf("minishell: %s: command not found\n", data->cmd[0]);
+			exit(EXIT_FAILURE);
 		}
-		printf("minishell: %s: command not found\n", data->cmd[0]);
 	}
 	wait(&i);
 }
