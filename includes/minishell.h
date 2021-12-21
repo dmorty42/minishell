@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/19 19:43:49 by bprovolo         ###   ########.fr       */
+/*   Updated: 2021/12/21 19:26:13 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,25 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_red
+{
+	int				dup_num;
+	int				fd;
+	struct s_red	*next;
+}	t_red;
+
 typedef struct s_node
 {
 	t_env			*env_lst;
+	t_red			*red;
 	char			**arg;
 	char			**path;
 	char			**cmd;
 	int				cmd_num;
 	struct s_node	*next;
 	t_env			*temp_env;
-	
+	int				redir_num;
 }	t_node;
-
 
 t_env	*parse_env(t_node *data, char **str);
 int		ft_bigstr_len(char **str);
@@ -59,6 +66,11 @@ int		ifkey(char c);
 char	*find_value(char *key, t_env *env);
 char	**two_dim_work(char **array, char *str, int *j);
 void	check_semicolon(char *line, t_node *data);
+//redirect
+char	*ft_redirect(char *line, int *i, t_node *data);
+int		check_red(char *line, int j);
+void	add_redir(t_red *temp, t_node *data);
+void	opening_file(char *file, t_node *data, int flag);
 //ilnurjan
 int		ft_strcmp(const char *s1, const char *s2);
 void	pwd_f(void);

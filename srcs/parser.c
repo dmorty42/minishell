@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 19:58:46 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/18 18:10:28 by bprovolo         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:44:21 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,23 @@ char	*space_prepare(char *line)
 	return (line);
 }
 
+char	*ft_tilde(char *line, int *i, t_node *data)
+{
+	int		j;
+	char	*temp;
+	char	*temp1;
+
+	j = *i;
+	temp = ft_substr(line, 0, j);
+	while (ft_strncmp(data->env_lst->key, "HOME", ft_strlen(data->env_lst->key)))
+		data->env_lst = data->env_lst->next;
+	temp1 = ft_strdup(line + j + 1);
+	temp = ft_strjoin(temp, data->env_lst->value);
+	temp = ft_strjoin(temp, temp1);
+	*i += ft_strlen(data->env_lst->value);
+	return (temp);
+}
+
 void	parser(char *line, t_env *env, t_node *data)
 {
 	int		i;
@@ -47,6 +64,12 @@ void	parser(char *line, t_env *env, t_node *data)
 	t = 0;
 	while (line[++i])
 	{
+		printf("line1 [%s] ", line);
+		printf("num1 = [%d]\n", i);
+		if (line[i] == '>' || line[i] == '<')
+			line = ft_redirect(line, &i, data);
+		if (line[i] == '~')
+			line = ft_tilde(line, &i, data);
 		if (line[i] == '\'')
 			line = ft_gap(line, &i);
 		if (line[i] == '\\')
@@ -55,6 +78,8 @@ void	parser(char *line, t_env *env, t_node *data)
 			line = ft_gap2(line, &i, env);
 		if (line[i] == '$')
 			line = ft_dollar(line, &i, env);
+		printf("line [%s] ", line);
+		printf("num = [%d]\n", i);
 		if (line[i] == ' ')
 		{
 			str = ft_substr(line, t, i - t);
