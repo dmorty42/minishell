@@ -6,7 +6,7 @@
 #    By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 23:22:12 by dmorty            #+#    #+#              #
-#    Updated: 2021/12/21 19:28:42 by dmorty           ###   ########.fr        #
+#    Updated: 2021/12/22 02:23:39 by dmorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCS	=	./srcs/main.c\
 			./functions/buildin.c\
 			./functions/cd_f.c\
 			./srcs/redir_util.c\
-			./srcs/work_with_files.c
+			./srcs/work_with_files.c\
+			./srcs/heredoc.c
 
 HEAD	=	./includes/minishell.h
 LIBFT	=	./libft/libft.a

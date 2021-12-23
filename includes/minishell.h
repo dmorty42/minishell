@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/21 19:26:13 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/22 02:13:02 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include <dirent.h>
 # include <errno.h>
 //ilnurjan
+# define LEFT 1
+# define RIGHT 2
+# define X_RIGHT 3
 
 typedef struct s_env
 {
@@ -33,15 +36,18 @@ typedef struct s_env
 
 typedef struct s_red
 {
-	int				dup_num;
-	int				fd;
-	struct s_red	*next;
+	int	r_num;
+	int	r_fd;
+	int	l_num;
+	int	l_fd;
+	int	x_num;
+	int	x_fd;
 }	t_red;
 
 typedef struct s_node
 {
 	t_env			*env_lst;
-	t_red			*red;
+	t_red			r;
 	char			**arg;
 	char			**path;
 	char			**cmd;
@@ -71,6 +77,8 @@ char	*ft_redirect(char *line, int *i, t_node *data);
 int		check_red(char *line, int j);
 void	add_redir(t_red *temp, t_node *data);
 void	opening_file(char *file, t_node *data, int flag);
+char	*parser_redir(char *line, t_node *data);
+char	*ft_heredoc(char *line, int i);
 //ilnurjan
 int		ft_strcmp(const char *s1, const char *s2);
 void	pwd_f(void);
