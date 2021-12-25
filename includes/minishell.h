@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/22 02:13:02 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/24 03:35:36 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ typedef struct s_red
 	int	x_fd;
 }	t_red;
 
+typedef struct s_her
+{
+	int	is_heredoc;
+	int	fd[2];
+}	t_her;
+
 typedef struct s_node
 {
 	t_env			*env_lst;
@@ -51,10 +57,14 @@ typedef struct s_node
 	char			**arg;
 	char			**path;
 	char			**cmd;
+	char			**temp;
 	int				cmd_num;
+	int				pipe_num;
+	int				is_pipe;
+	int				**fd;
 	struct s_node	*next;
 	t_env			*temp_env;
-	int				redir_num;
+	t_her			her;
 }	t_node;
 
 t_env	*parse_env(t_node *data, char **str);
@@ -72,13 +82,19 @@ int		ifkey(char c);
 char	*find_value(char *key, t_env *env);
 char	**two_dim_work(char **array, char *str, int *j);
 void	check_semicolon(char *line, t_node *data);
+void	cycle_clean(t_node *data, int flag);
+void	execute_cmd(t_node *data, char **env);
 //redirect
 char	*ft_redirect(char *line, int *i, t_node *data);
 int		check_red(char *line, int j);
 void	add_redir(t_red *temp, t_node *data);
 void	opening_file(char *file, t_node *data, int flag);
 char	*parser_redir(char *line, t_node *data);
-char	*ft_heredoc(char *line, int i);
+char	*ft_heredoc(char *line, int i, t_node *data);
+//pipes
+void	check_pipe(t_node *data, int i);
+void	execute_pipe(t_node *data, char **env);
+void	pipe_dup(t_node *data);
 //ilnurjan
 int		ft_strcmp(const char *s1, const char *s2);
 void	pwd_f(void);

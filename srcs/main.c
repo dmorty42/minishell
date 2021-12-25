@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:49:46 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/22 01:20:26 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/24 05:07:11 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ void	execute_cmd(t_node *data, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (data->pipe_num < data->is_pipe)
+		{
+			pipe_dup(data);
+		}
+		if (data->her.is_heredoc)
+			dup2(data->her.fd[0], 0);
 		if (data->r.l_num || data->r.r_num)
 		{
 			if (data->r.l_num)
@@ -43,23 +49,28 @@ void	execute_cmd(t_node *data, char **env)
 			exit(EXIT_FAILURE);
 		}
 	}
-	wait(&i);
+	if (pid > 0)
+		wait(NULL);
+	if (pid > 0 && data->pipe_num < data->is_pipe)
+		execute_pipe(data, env);
 }
 
 void	init(t_node *data)
 {
 	data->cmd = NULL;
 	data->cmd_num = 1;
-	data->redir_num = 0;
+	data->her.is_heredoc = 0;
 	data->r.r_num = 0;
 	data->r.l_num = 0;
 	data->r.r_fd = 0;
 	data->r.l_fd = 0;
 	data->r.x_fd = 0;
 	data->r.x_num = 0;
+	data->pipe_num = 10;
+	data->is_pipe = 0;
 }
 
-void	cycle_clean(t_node *data)
+void	cycle_clean(t_node *data, int flag)
 {
 	int	i;
 
@@ -80,6 +91,24 @@ void	cycle_clean(t_node *data)
 	{
 		close(data->r.r_fd);
 		data->r.r_num = 0;
+	}
+	if (data->her.is_heredoc)
+	{
+		data->her.is_heredoc = 0;
+		close(data->her.fd[0]);
+	}
+	if (flag == 1)
+	{
+		i = -1;
+		if (data->temp)
+		{
+			while (data->temp[++i])
+				free(data->temp[i]);
+			free(data->temp);
+			data->temp = NULL;
+		}
+		data->pipe_num = 10;
+		data->is_pipe = 0;
 	}
 }
 
@@ -107,9 +136,10 @@ int	main(int argc, char **argv, char **env)
 			while (data->cmd_num > 0)
 			{
 				data->arg[i] = space_prepare(data->arg[i]);
+				check_pipe(data, i);
 				parser(data->arg[i], data->env_lst, data);
 				execute_cmd(data, env);
-				cycle_clean(data);
+				cycle_clean(data, 1);
 				i++;
 				data->cmd_num--;
 			}
