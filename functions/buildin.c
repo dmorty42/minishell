@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/20 19:00:07 by bprovolo         ###   ########.fr       */
+/*   Updated: 2021/12/25 17:43:17 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,25 @@ void	echo_f(t_node *data)
 		write(tmp, "\n", 1);
 }
 
-int	isItBuildin(t_node *data)
+int	buildin_2(t_node *data)
 {	
+	// if (!l->cmd[0] || !list->cmd[0][0])
+	// 	num += 0;
+	if (!ft_strcmp(data->cmd[0], "export"))
+		export_f();
+	if (!ft_strcmp(data->cmd[0], "exit"))
+		exit_f();
+	else
+		return(1);
+	// 	if (buildinP2(list, mini, num))
+	// 		return (0);
+	// mini->lastCMD = 1;
+	return (0);
+}
+
+int	buildin_1(t_node *data)
+{	
+		
 	// if (!l->cmd[0] || !list->cmd[0][0])
 	// 	num += 0;
 	if (!ft_strcmp(data->cmd[0], "pwd"))
@@ -58,7 +75,9 @@ int	isItBuildin(t_node *data)
 		echo_f(data);
 	else if (!ft_strcmp(data->cmd[0], "cd"))
 		cmd_cd(data);
-	else
+	else if (!ft_strcmp(data->cmd[0], "env"))
+		env_f(data);
+	else if(buildin_2(data))
 		return(1);
 	// 	if (buildinP2(list, mini, num))
 	// 		return (0);
