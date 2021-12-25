@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/25 17:43:17 by bprovolo         ###   ########.fr       */
+/*   Updated: 2021/12/25 19:43:04 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@ int	buildin_2(t_node *data)
 	// if (!l->cmd[0] || !list->cmd[0][0])
 	// 	num += 0;
 	if (!ft_strcmp(data->cmd[0], "export"))
-		export_f();
+		// export_f();
+		sleep(1);
 	if (!ft_strcmp(data->cmd[0], "exit"))
-		exit_f();
+		// exit_f();
+		sleep(1);
 	else
 		return(1);
 	// 	if (buildinP2(list, mini, num))
