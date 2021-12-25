@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/20 19:00:07 by bprovolo         ###   ########.fr       */
+/*   Updated: 2021/12/24 04:07:52 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	pwd_f(void)
 		perror("\n ошибка getcwd \n");
 	else
 		ft_putstr_fd(buff, 0);
-	write(1, "\n", 1);
 }
 
 void	echo_f(t_node *data)
