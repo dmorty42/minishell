@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   env_f.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 21:37:52 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/25 14:31:25 by bprovolo         ###   ########.fr       */
+/*   Created: 2021/12/23 23:07:24 by bprovolo          #+#    #+#             */
+/*   Updated: 2021/12/25 16:52:59 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	env_f(t_node *data)
 {
-	int	i;
+	t_env	*temp;
+	int		tmp;
 
-	i = 0;
-	if (!s)
-		return ((void)0);
-	while (s[i] != '\0')
+	tmp = 1;
+	// if (list->fPipeIn)
+	// 	tmp = mini->dd[num][1];
+	// if (list->redirFlag)
+	// 	tmp = list->fdOut;
+	temp = data->env_lst;
+	while (temp)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		if (temp->flag)
+		{
+			ft_putstr_fd(temp->key, tmp);
+			write(tmp, "=", 1);
+			ft_putstr_fd(temp->value, tmp);
+			write(tmp, "\n", 1);
+		}
+		temp = temp->next;
 	}
+	// data->ff_exit = 0;
 }

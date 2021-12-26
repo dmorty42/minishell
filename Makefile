@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+         #
+#    By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 23:22:12 by dmorty            #+#    #+#              #
-#    Updated: 2021/12/24 01:12:00 by dmorty           ###   ########.fr        #
+#    Updated: 2021/12/25 13:28:10 by bprovolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ SRCS	=	./srcs/main.c\
 			./functions/buildin.c\
 			./functions/cd_f.c\
 			./srcs/redir_util.c\
+			./functions/env_f.c\
+			./srcs/work_with_files.c
 			./srcs/work_with_files.c\
 			./srcs/heredoc.c\
 			./srcs/pipe.c

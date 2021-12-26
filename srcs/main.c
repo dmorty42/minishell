@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:49:46 by dmorty            #+#    #+#             */
 /*   Updated: 2021/12/26 19:41:01 by dmorty           ###   ########.fr       */
@@ -39,7 +39,7 @@ void	execute_cmd(t_node *data, char **env)
 			if (data->r.r_num)
 				dup2(data->r.r_fd, 1);
 		}
-		if (isItBuildin(data))
+		if (buildin_1(data))
 		{
 			while (data->path[++i])
 			{

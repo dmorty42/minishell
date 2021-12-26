@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:38:14 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/20 19:50:16 by bprovolo         ###   ########.fr       */
+/*   Updated: 2021/12/25 15:56:52 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,17 @@ static int	cd_flag(t_node *data, int *flag)
 	// 		return (1);
 	// }
 	// // 	 else if(ft_strcmp(data->cmd[1], "~"))
-	// else if (data->cmd[1][0] == '~' && (data->cmd[1][1] == '/'
+
 	// 	|| !data->cmd[1][1]))
 	{
 		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		// data->ff_exit = 1;
 		return (1);
 	}
+	// 	else if (!data->cmd[1])
+	// 		printf("flag %d  int\n", *flag);
+	// printf("%s\n", data->cmd[1]);
+	
 	return (0);
 }
 
@@ -107,14 +111,14 @@ void	cmd_cd(t_node *data)
 	if (flag)
 		Dir = opendir(data->cmd[1]);
 	else
-		Dir = opendir(data->env_lst->value + 5);
+		Dir = opendir(data->env_lst->value);
 	if ((Dir) == NULL)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		if (flag)
 			ft_putstr_fd(data->cmd[1], 2);
 		else
-			ft_putstr_fd(data->env_lst->value + 5, 2);
+			ft_putstr_fd(data->env_lst->value, 2);
 		write(2, " : ", 3);
 		ft_putstr_fd(strerror (errno), 2);
 		write(2, "\n", 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 21:04:54 by dmorty            #+#    #+#             */
-/*   Updated: 2021/11/22 18:27:16 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/25 14:35:45 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_env	*parse_env(t_node *data, char **str)
 		j = key_len(str[i]);
 		temp->key = ft_substr(str[i], 0, j);
 		temp->value = ft_strdup(str[i] + 1 + j);
+		temp->flag = 1;
 		if (!ft_strncmp("PATH", temp->key, j))
 			ft_parse_path(temp, data);
 		temp->next = data->env_lst;

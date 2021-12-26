@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
 /*   Updated: 2021/12/26 18:27:13 by dmorty           ###   ########.fr       */
@@ -32,6 +32,7 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 	struct s_env	*next;
+	int				flag;
 }	t_env;
 
 typedef struct s_red
@@ -99,8 +100,10 @@ void	close_fd(t_node *data);
 //ilnurjan
 int		ft_strcmp(const char *s1, const char *s2);
 void	pwd_f(void);
-int		isItBuildin(t_node *data);
+int		buildin_1(t_node *data);
 void	cmd_cd(t_node *data);
 t_node	*ft_lstnew_i(int content);
+void	unset_f(t_node *data);
+void	env_f(t_node *data);
 //ilnurjan
 #endif
