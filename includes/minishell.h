@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/24 03:35:36 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/26 18:27:13 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char	*ft_heredoc(char *line, int i, t_node *data);
 void	check_pipe(t_node *data, int i);
 void	execute_pipe(t_node *data, char **env);
 void	pipe_dup(t_node *data);
+void	close_fd(t_node *data);
 //ilnurjan
 int		ft_strcmp(const char *s1, const char *s2);
 void	pwd_f(void);

@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:49:46 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/24 05:07:11 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/26 19:41:01 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	execute_cmd(t_node *data, char **env)
 	int		pid;
 
 	i = -1;
+	if (data->pipe_num > 0 && data->pipe_num < data->is_pipe)
+	{
+		close(data->fd[data->pipe_num - 1][1]);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -51,7 +55,7 @@ void	execute_cmd(t_node *data, char **env)
 	}
 	if (pid > 0)
 		wait(NULL);
-	if (pid > 0 && data->pipe_num < data->is_pipe)
+	if (pid > 0 && data->pipe_num < data->is_pipe - 1)
 		execute_pipe(data, env);
 }
 
@@ -106,6 +110,18 @@ void	cycle_clean(t_node *data, int flag)
 				free(data->temp[i]);
 			free(data->temp);
 			data->temp = NULL;
+		}
+		i = -1;
+		if (data->fd)
+		{
+			while (++i < data->is_pipe - 1)
+			{
+				close(data->fd[i][0]);
+				close(data->fd[i][1]);
+				free(data->fd[i]);
+			}
+			free(data->fd);
+			data->fd = NULL;
 		}
 		data->pipe_num = 10;
 		data->is_pipe = 0;
