@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 19:58:46 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/21 20:44:21 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/24 04:03:34 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,9 @@ void	parser(char *line, t_env *env, t_node *data)
 	i = -1;
 	j = 0;
 	t = 0;
+	line = parser_redir(line, data);
 	while (line[++i])
 	{
-		printf("line1 [%s] ", line);
-		printf("num1 = [%d]\n", i);
-		if (line[i] == '>' || line[i] == '<')
-			line = ft_redirect(line, &i, data);
 		if (line[i] == '~')
 			line = ft_tilde(line, &i, data);
 		if (line[i] == '\'')
@@ -78,8 +75,6 @@ void	parser(char *line, t_env *env, t_node *data)
 			line = ft_gap2(line, &i, env);
 		if (line[i] == '$')
 			line = ft_dollar(line, &i, env);
-		printf("line [%s] ", line);
-		printf("num = [%d]\n", i);
 		if (line[i] == ' ')
 		{
 			str = ft_substr(line, t, i - t);

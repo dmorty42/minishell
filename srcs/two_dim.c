@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   two_dim.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 21:14:15 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/18 18:18:57 by bprovolo         ###   ########.fr       */
+/*   Updated: 2021/12/24 00:51:06 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	check_semicolon(char *line, t_node *data)
 
 	i = -1;
 	while (line[++i])
+	{
 		if (line[i] == ';')
 			data->cmd_num += 1;
+	}
 	data->arg = ft_split(line, ';');
 }
