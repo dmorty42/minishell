@@ -26,6 +26,9 @@ SRCS	=	./srcs/main.c\
 			./functions/env_f.c\
 			./functions/exit_f.c\
 			./srcs/work_with_files.c
+			./srcs/work_with_files.c\
+			./srcs/heredoc.c\
+			./srcs/pipe.c
 
 HEAD	=	./includes/minishell.h
 LIBFT	=	./libft/libft.a
