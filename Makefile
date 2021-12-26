@@ -6,7 +6,7 @@
 #    By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 23:22:12 by dmorty            #+#    #+#              #
-#    Updated: 2021/12/25 13:28:10 by bprovolo         ###   ########.fr        #
+#    Updated: 2021/12/26 21:39:14 by bprovolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,12 @@ SRCS	=	./srcs/main.c\
 			./srcs/two_dim.c\
 			./utils/ft_strcmp.c\
 			./utils/ft_lstnew_i.c\
+			./utils/ft_atoi_long.c\
 			./functions/buildin.c\
 			./functions/cd_f.c\
 			./srcs/redir_util.c\
 			./functions/env_f.c\
+			./functions/exit_f.c\
 			./srcs/work_with_files.c
 
 HEAD	=	./includes/minishell.h
