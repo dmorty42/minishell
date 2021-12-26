@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   exit_f.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 21:37:52 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/25 14:31:25 by bprovolo         ###   ########.fr       */
+/*   Created: 2021/12/25 17:44:57 by bprovolo          #+#    #+#             */
+/*   Updated: 2021/12/25 17:53:24 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	exit_f(t_node *data)
 {
 	int	i;
 
 	i = 0;
-	if (!s)
-		return ((void)0);
-	while (s[i] != '\0')
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
+	
+	write(2, "exit\n", 5);
+
+	
 }
