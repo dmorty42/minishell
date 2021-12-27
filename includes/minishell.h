@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/26 18:27:13 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/26 21:38:46 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,7 @@ void	cmd_cd(t_node *data);
 t_node	*ft_lstnew_i(int content);
 void	unset_f(t_node *data);
 void	env_f(t_node *data);
+void	exit_f(t_node *data);
+unsigned long long	ft_atoi_long(const char *str);
 //ilnurjan
 #endif
