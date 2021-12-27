@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 01:04:17 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/24 04:37:12 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/26 19:18:36 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,15 @@ void	pipe_dup(t_node *data)
 {
 	if (data->pipe_num == 0)
 	{
-		close(data->fd[0][0]);
 		dup2(data->fd[0][1], 1);
 	}
 	else if (data->pipe_num < data->is_pipe - 1)
 	{
-		close(data->fd[data->pipe_num - 1][1]);
 		dup2(data->fd[data->pipe_num - 1][0], 0);
-		close(data->fd[data->pipe_num][0]);
 		dup2(data->fd[data->pipe_num][1], 1);
 	}
 	else if (data->pipe_num == data->is_pipe - 1)
 	{
-		close(data->fd[data->pipe_num - 1][1]);
 		dup2(data->fd[data->pipe_num - 1][0], 0);
 	}
 }
