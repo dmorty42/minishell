@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:49:46 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/25 17:05:48 by bprovolo         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:47:42 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	init(t_node *data)
 	data->r.x_num = 0;
 	data->pipe_num = 10;
 	data->is_pipe = 0;
+	data->declare_exp = ft_strdup("declare -x ");
 }
 
 void	cycle_clean(t_node *data, int flag)

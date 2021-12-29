@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:44:57 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/26 21:49:05 by bprovolo         ###   ########.fr       */
+/*   Updated: 2021/12/28 21:08:53 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ void	exit_f(t_node *data)
 		j = hyphen_sign(data, &hyph);
 		exit_2_f(data, j, hyph);
 	}
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
