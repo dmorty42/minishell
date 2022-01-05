@@ -6,11 +6,17 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:20:26 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/22 01:20:14 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/05 18:32:31 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	smth_wrong(char *file, t_node *data)
+{
+	data->is_err += 1;
+	printf("minishell: %s: %s\n", file, strerror(errno));
+}
 
 void	opening_file(char *file, t_node *data, int flag)
 {
@@ -37,4 +43,7 @@ void	opening_file(char *file, t_node *data, int flag)
 			close(data->r.r_fd);
 		data->r.r_fd = fd;
 	}
+	if (fd < 0)
+		smth_wrong(file, data);
+	free(file);
 }

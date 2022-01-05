@@ -6,12 +6,11 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 20:05:27 by dmorty            #+#    #+#             */
-/*   Updated: 2021/11/27 00:41:45 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/28 03:26:57 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 char	*ft_dollar(char *line, int *i, t_env *env)
 {
@@ -32,7 +31,7 @@ char	*ft_dollar(char *line, int *i, t_env *env)
 	temp2 = ft_strdup(line + *i);
 	temp = ft_strjoin(temp, key);
 	temp = ft_strjoin(temp, temp2);
-	// free(line);
+	free(line);
 	*i -= 1;
 	return (temp);
 }
@@ -60,7 +59,8 @@ char	*ft_gap2(char *line, int *i, t_env *env)
 	j = *i;
 	while (line[++(*i)])
 	{
-		if (line[*i] == '\\' && (line[*i + 1] == '\"' || line[*i + 1] == '$' || line[*i + 1] == '\\'))
+		if (line[*i] == '\\' && (line[*i + 1] == '\"' \
+			|| line[*i + 1] == '$' || line[*i + 1] == '\\'))
 			line = ft_slash(line, i);
 		if (line[*i] == '$')
 			line = ft_dollar(line, i, env);
@@ -73,7 +73,7 @@ char	*ft_gap2(char *line, int *i, t_env *env)
 	temp = ft_strjoin(temp, temp2);
 	temp = ft_strjoin(temp, temp3);
 	*i -= 2;
-	// free(line);
+	free(line);
 	return (temp);
 }
 
