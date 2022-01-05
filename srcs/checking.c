@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 18:29:07 by dmorty            #+#    #+#             */
-/*   Updated: 2021/11/26 19:28:31 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/05 18:18:16 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,35 @@ char	check_pipe_syntax(char *line)
 	return ('O');
 }
 
-void	check_syntax(char *line)
+void	check_double_semi(char *line, t_node *data)
+{
+	int	i;
+
+	i = -1;
+	while (line[++i + 1])
+	{
+		if (line[i] == ';' && line[i + 1] == ';')
+		{
+			printf("minishell: syntax error near unexpected token ';;'\n");
+			data->is_err += 1;
+		}
+	}
+}
+
+void	check_syntax(char *line, t_node *data)
 {
 	char	err;
 
 	if (check_quotes(line) == -1)
 	{
 		printf("error: unclosed quotes\n");
-		exit(EXIT_FAILURE);
+		data->is_err += 1;
 	}
 	err = check_pipe_syntax(line);
 	if (err != 'O')
 	{
 		printf("syntax error near unexpected token '%c'\n", err);
-		exit(EXIT_FAILURE);
+		data->is_err += 1;
 	}
+	check_double_semi(line, data);
 }

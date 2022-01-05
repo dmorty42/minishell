@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 21:14:15 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/24 00:51:06 by dmorty           ###   ########.fr       */
+/*   Updated: 2021/12/28 03:25:06 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ char	**two_dim_work(char **array, char *str, int *j)
 		while (array[i])
 		{
 			temp[i] = ft_strdup(array[i]);
+			free(array[i]);
 			i++;
 		}
 	}	
 	temp[i] = ft_strdup(str);
 	temp[i + 1] = NULL;
 	free(array);
+	free(str);
 	*j += 1;
 	return (temp);
 }

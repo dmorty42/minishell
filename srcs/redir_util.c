@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 07:12:31 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/23 22:48:23 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/05 18:41:15 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,14 @@ char	*left_redir(char *line, int i, t_node *data)
 		i++;
 	file_name = ft_substr(line, j, i - j);
 	opening_file(file_name, data, LEFT);
-	temp1 = ft_strdup(line + i + 1);
-	temp = ft_strjoin(temp, " ");
-	temp = ft_strjoin(temp, temp1);
+	if (data->is_err == 0)
+	{
+		temp1 = ft_strdup(line + i + 1);
+		temp = ft_strjoin(temp, " ");
+		temp = ft_strjoin(temp, temp1);
+		free(temp1);
+	}
+	free(line);
 	return (temp);
 }
 
@@ -48,6 +53,7 @@ char	*right_redir(char *line, int i, t_node *data)
 {
 	char	*temp;
 	char	*temp1;
+	char	*temp2;
 	char	*file_name;
 	int		j;
 
@@ -60,9 +66,22 @@ char	*right_redir(char *line, int i, t_node *data)
 		i++;
 	file_name = ft_substr(line, j, i - j);
 	opening_file(file_name, data, RIGHT);
-	temp1 = ft_strdup(line + i + 1);
-	temp = ft_strjoin(temp, " ");
-	temp = ft_strjoin(temp, temp1);
+	if (data->is_err == 0)
+	{
+		temp1 = ft_strdup(line + i + 1);
+		temp2 = ft_strjoin(temp, " ");
+		free(temp);
+		temp = ft_strjoin(temp2, temp1);
+		free(line);
+		free(temp1);
+		free(temp2);
+	}
+	else
+	{
+		free(line);
+		free(temp);
+		temp = NULL;
+	}
 	return (temp);
 }
 
@@ -85,6 +104,8 @@ char	*double_redir(char *line, int i, t_node *data)
 	temp1 = ft_strdup(line + i + 1);
 	temp = ft_strjoin(temp, " ");
 	temp = ft_strjoin(temp, temp1);
+	free(line);
+	free(temp1);
 	return (temp);
 }
 
@@ -102,20 +123,5 @@ char	*ft_redirect(char *line, int *i, t_node *data)
 		return (right_redir(line, j, data));
 	if (flag == X_RIGHT)
 		return (double_redir(line, j, data));
-	return (line);
-}
-
-char	*parser_redir(char *line, t_node *data)
-{
-	int	i;
-
-	i = -1;
-	while (line[++i])
-	{
-		if (line[i] == '<' && line[i + 1] == '<')
-			line = ft_heredoc(line, i, data);
-		else if (line[i] == '>' || line[i] == '<')
-			line = ft_redirect(line, &i, data);
-	}
 	return (line);
 }
