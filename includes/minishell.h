@@ -98,6 +98,7 @@ char	*ft_heredoc(char *line, int i, t_node *data);
 void	check_pipe(t_node *data, int i);
 void	execute_pipe(t_node *data, char **env);
 void	pipe_dup(t_node *data);
+void	close_fd(t_node *data);
 //ilnurjan
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin_free(char *s1, char *s2);
