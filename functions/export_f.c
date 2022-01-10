@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:00:49 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/27 22:17:57 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/09 21:01:09 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_export(t_node *data, int i)
 {
 	int	y;
-	
+
 	y = 1;
 	if (!ft_isalpha(data->cmd[i][0]) && data->cmd[i][0] != '-')
 		return (i);
@@ -36,23 +36,33 @@ static void export_equals(t_node *data, int j, int i)
 {
 	t_env	*tmp = NULL;
 	char	*ctmp;
-	
-	// tmp = cmd_tmp(data, j, i);
+// tmp = cmd_tmp(data, j, i);
 	if (tmp)
 	{
 		 return ;
 	}
 	tmp = ft_lstnew_env();
-	if (j - 1 >= 0 && data->cmd[i][j - 1] == '+')
-		--j;
-	tmp->key = ft_substr(data->cmd[i], 0, j);
-	if (data->cmd[i][j] == '+')
+	// if (j - 1 >= 0 && data->cmd[i][j - 1] == '+')
+	// 	--j;
+	if (data->cmd[i][j - 1] == '+' && data->cmd[i][j] == '=')
 	{
-		ctmp = ft_strdup(data->cmd[i] + j + 1);
-		// tmp->value = ft_strjoin();
+		tmp->key = ft_substr(data->cmd[i], 0, j - 1);
+		ctmp = ft_strdup(&data->cmd[i][j + 1]);
+		printf("ctmp= %s\n", ctmp);
+		printf("tmp1= %s\n", tmp->value);
+		if (tmp->value)
+			tmp->value = ft_strjoin(tmp->value, ctmp);
+		else
+			tmp->value = ft_strdup(&data->cmd[i][j + 1]);
+		printf("tmp2= %s\n", tmp->value);
 		free(ctmp);
 	}
-	tmp->value = ft_strdup(data->cmd[i]);
+	else
+	{
+		tmp->key = ft_substr(data->cmd[i], 0, j);
+		tmp->value = ft_strdup(&data->cmd[i][j + 1]);
+	}
+	printf("i=%d, key= %s value= %s\n", i, tmp->key, tmp->value);
 	tmp->flag = 0;
 	if (!ft_strcmp(data->cmd[0], "export"))
 		tmp->flag = 1;
@@ -65,8 +75,8 @@ void export_f(t_node *data)
 	int	j;
 
 	j = 0;
-	i = 1;
-	while (data->cmd[i])
+	i = 0;
+	while (data->cmd[++i])
 	{
 		if (check_export(data, i) != 0)
 		{
@@ -79,9 +89,9 @@ void export_f(t_node *data)
 		while (data->cmd[i][j] != '=' && data->cmd[i][j])
 			++j;
 		if (data->cmd[i][j])
-			export_equals(data, j, i++);
+			export_equals(data, j, i);
+		// i++;
 	// 	else
 	// 		export_next()
 	}
-	
 }

@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/29 21:38:32 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/09 19:38:31 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	buildin_2(t_node *data)
 		if (data->cmd[1])
 			export_f(data);
 		else
-			export_f2(data);
+			ft_declare(data);
+			// export_f2(data);
 	}
 		// sleep(1);
 	else if (!ft_strcmp(data->cmd[0], "exit"))
