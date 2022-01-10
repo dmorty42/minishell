@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/09 19:38:05 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/11 02:12:06 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "../libft/libft.h"
+# include "signal.h"
 //ilnurjan
 # include <dirent.h>
 # include <errno.h>
@@ -59,6 +60,7 @@ typedef struct s_node
 	char			**path;
 	char			**cmd;
 	char			**temp;
+	int				exit_status;
 	int				cmd_num;
 	int				pipe_num;
 	int				is_pipe;
@@ -71,6 +73,7 @@ typedef struct s_node
 	t_her			her;
 }	t_node;
 
+void rl_replace_line();
 t_env	*parse_env(t_node *data, char **str);
 int		ft_bigstr_len(char **str);
 void	check_syntax(char *line, t_node *data);
@@ -89,6 +92,9 @@ void	check_semicolon(char *line, t_node *data);
 void	cycle_clean(t_node *data, int flag);
 void	execute_cmd(t_node *data, char **env);
 char	**lst_to_array(t_node *data);
+void	signal_work(void);
+void	sig_handler(int sig);
+void	parse_path(t_node *data);
 //redirect
 char	*ft_redirect(char *line, int *i, t_node *data);
 int		check_red(char *line, int j);

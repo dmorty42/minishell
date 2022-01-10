@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_f.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:38:14 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/25 15:56:52 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/10 23:35:48 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static int	no_params(t_node *data)
 	if (!data->temp_env)
 	{
 		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-		// data->ff_exit = 1;
 		return (1);
 	}
 	return (0);
@@ -48,24 +47,28 @@ static int	cd_flag(t_node *data, int *flag)
 			return (1);
 	}
 	else if (!ft_strcmp(data->cmd[1], "~"))
-	// else if (data->cmd[1][0] == '-' && !data->cmd[1][1])
-	// {
-	// 	if (OldDir(data, mini))
-	// 		return (1);
-	// }
-	// // 	 else if(ft_strcmp(data->cmd[1], "~"))
-
-	// 	|| !data->cmd[1][1]))
 	{
 		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-		// data->ff_exit = 1;
 		return (1);
 	}
-	// 	else if (!data->cmd[1])
-	// 		printf("flag %d  int\n", *flag);
-	// printf("%s\n", data->cmd[1]);
-	
 	return (0);
+}
+
+void	change_pwd(char *str, t_node *data, char *path)
+{
+	t_env	*temp;
+
+	temp = data->env_lst;
+	while (temp)
+	{
+		if (!strcmp(str, temp->key))
+		{
+			free(temp->value);
+			temp->value = NULL;
+			temp->value = ft_strdup(path + ft_strlen(str) + 1);
+		}
+		temp = temp->next;
+	}
 }
 
 static void	change_dir(t_node *data, int flag, int i)
@@ -74,12 +77,12 @@ static void	change_dir(t_node *data, int flag, int i)
 	t_node	*new;
 
 	buf = cmd_cd2("OLDPWD=");
+	change_pwd("OLDPWD", data, buf);
 	new = ft_lstnew_i(1);
 	new->cmd = malloc(sizeof(char *) * 3);
 	new->cmd[0] = ft_strdup("1");
 	new->cmd[1] = buf;
 	new->cmd[2] = NULL;
-	// export_f(mini, new, 1);
 	if (flag)
 	{
 		if (chdir(data->cmd[1]) == -1)
@@ -89,10 +92,9 @@ static void	change_dir(t_node *data, int flag, int i)
 		if (chdir(data->env_lst->value + 5) == -1)
 			ft_putstr_fd(strerror (errno), 2);
 	buf = cmd_cd2("PWD=");
-// printf("%s\n",  data->env_lst->value + 5);
+	change_pwd("PWD", data, buf);
 	free(new->cmd[1]);
 	new->cmd[1] = buf;
-	// export_f(mini, new, 1);
 	while (new->cmd[i])
 		free(new->cmd[i++]);
 	free(new->cmd);
@@ -101,18 +103,17 @@ static void	change_dir(t_node *data, int flag, int i)
 
 void	cmd_cd(t_node *data)
 {
-	DIR		*Dir;
+	DIR		*dir;
 	int		flag;
 
 	flag = 1;
-	// data->ff_exit = 0;
 	if (cd_flag(data, &flag))
 		return ;
 	if (flag)
-		Dir = opendir(data->cmd[1]);
+		dir = opendir(data->cmd[1]);
 	else
-		Dir = opendir(data->env_lst->value);
-	if ((Dir) == NULL)
+		dir = opendir(data->env_lst->value);
+	if ((dir) == NULL)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		if (flag)
@@ -122,9 +123,8 @@ void	cmd_cd(t_node *data)
 		write(2, " : ", 3);
 		ft_putstr_fd(strerror (errno), 2);
 		write(2, "\n", 1);
-		//  data->ff_exit = 1;
 		return ;
 	}
 	change_dir(data, flag, 0);
-	closedir(Dir);
+	closedir(dir);
 }

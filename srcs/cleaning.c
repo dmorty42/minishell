@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:47:49 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/10 19:46:01 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/11 02:04:44 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,16 @@ void	cmd_clean(t_node *data)
 	i = -1;
 	if (data->cmd)
 	{
-		while (data->cmd[++i])
-			free(data->cmd[i]);
 		free(data->cmd);
 		data->cmd = NULL;
+	}
+	if (data->path)
+	{
+		i = -1;
+		while (data->path[++i])
+			free(data->path[i]);
+		free(data->path);
+		data->path = NULL;
 	}
 }
 

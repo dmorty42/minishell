@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/09 19:38:31 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/11 02:48:38 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	pwd_f(void)
 	buff = malloc(sizeof(char) * 1000);
 	getcwd(buff, 1000);
 	if (!buff[0])
-		perror("\n Error getcwd \n");
+		perror("\n Error getcwd");
 	else
-		ft_putstr_fd(buff, 0);
+		ft_putstr_fd(buff, 1);
 	write(1, "\n", 1);
+	free(buff);
 }
 
 void	echo_f(t_node *data)
@@ -38,7 +39,10 @@ void	echo_f(t_node *data)
 		flag = 1;
 	while (data->cmd[++i])
 	{
-		ft_putstr_fd(data->cmd[i + flag], tmp);
+		if (!ft_strcmp(data->cmd[i + flag], "$?"))
+			ft_putnbr_fd(data->exit_status, tmp);
+		else
+			ft_putstr_fd(data->cmd[i + flag], tmp);
 		if (i + flag + 1 < ft_bigstr_len(data->cmd))
 			write(tmp, " ", 1);
 	}
@@ -86,7 +90,7 @@ int	buildin_1(t_node *data)
 	else if (!ft_strcmp(data->cmd[0], "env"))
 		env_f(data);
 	else if (!ft_strcmp(data->cmd[0], "unset"))
-		unset_f(data);	
+		unset_f(data);
 	else if(buildin_2(data))
 		return(1);
 	// 	if (buildinP2(list, mini, num))

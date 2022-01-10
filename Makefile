@@ -6,7 +6,7 @@
 #    By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 23:22:12 by dmorty            #+#    #+#              #
-#    Updated: 2022/01/09 19:48:01 by bprovolo         ###   ########.fr        #
+#    Updated: 2022/01/11 01:24:13 by dmorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRCS	=	./srcs/main.c\
 			./srcs/pipe.c\
 			./srcs/cmd_executing.c\
 			./srcs/cleaning.c\
-			./srcs/redirecting.c
+			./srcs/redirecting.c\
+			./srcs/signals.c
 
 HEAD	=	./includes/minishell.h
 LIBFT	=	./libft/libft.a
@@ -47,7 +48,7 @@ OBJS	=	$(SRCS:.c=.o)
 
 GCC		= 	gcc
 FLAG	=	-Wall -Wextra -Werror  
-LINE	=	-lreadline
+LINE	=	-lreadline -I/Users/dmorty/.brew/Cellar/readline/8.1/include -L/Users/dmorty/.brew/Cellar/readline/8.1/lib/
 RM		=	rm -f
 C		=	-c
 O		=	-o
@@ -56,7 +57,7 @@ $(NAME):	$(OBJS)
 			$(MAKE) -C ./libft
 			$(MAKE) bonus -C ./libft
 			$(GCC) $(LINE) $(FLAG) $(O) $(NAME) $(OBJS) $(LIBFT)
-			@say done
+
 $(OBJS):	$(HEAD)
 
 all:		$(NAME) 	

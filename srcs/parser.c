@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 19:58:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/10 19:14:09 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/11 02:19:51 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ void	parser(char *line, t_env *env, t_node *data)
 	if (t != ft_strlen(line))
 		data->cmd = two_dim_work(data->cmd, \
 					ft_substr(line, t, ft_strlen(line) - t), &j);
+	parse_path(data);
 	free(line);
 }
