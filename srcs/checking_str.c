@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 20:19:11 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/26 19:32:52 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/05 15:59:23 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ char	*ft_del_space(char *line, int *i)
 	temp = ft_substr(line, 0, *i);
 	temp2 = ft_strdup(line + *i + 1);
 	temp = ft_strjoin(temp, temp2);
+	free(line);
+	free(temp2);
 	return (temp);
 }

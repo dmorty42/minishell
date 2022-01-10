@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+         #
+#    By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 23:22:12 by dmorty            #+#    #+#              #
 #    Updated: 2022/01/09 19:48:01 by bprovolo         ###   ########.fr        #
@@ -31,7 +31,10 @@ SRCS	=	./srcs/main.c\
 			./functions/unset_f.c\
 			./srcs/work_with_files.c\
 			./srcs/heredoc.c\
-			./srcs/pipe.c
+			./srcs/pipe.c\
+			./srcs/cmd_executing.c\
+			./srcs/cleaning.c\
+			./srcs/redirecting.c
 
 HEAD	=	./includes/minishell.h
 LIBFT	=	./libft/libft.a
