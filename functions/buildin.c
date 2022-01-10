@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/26 20:47:30 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/09 19:38:31 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	pwd_f(void)
 	buff = malloc(sizeof(char) * 1000);
 	getcwd(buff, 1000);
 	if (!buff[0])
-		perror("\n ошибка getcwd \n");
+		perror("\n Error getcwd \n");
 	else
 		ft_putstr_fd(buff, 0);
+	write(1, "\n", 1);
 }
 
 void	echo_f(t_node *data)
@@ -52,11 +53,18 @@ int	buildin_2(t_node *data)
 	// if (!l->cmd[0] || !list->cmd[0][0])
 	// 	num += 0;
 	if (!ft_strcmp(data->cmd[0], "export"))
-		// export_f();
-		sleep(1);
-	if (!ft_strcmp(data->cmd[0], "exit"))
-		exit_f(data);
+	{
+		if (data->cmd[1])
+			export_f(data);
+		else
+			ft_declare(data);
+			// export_f2(data);
+	}
 		// sleep(1);
+	else if (!ft_strcmp(data->cmd[0], "exit"))
+		exit_f(data);
+	else if (!ft_strcmp(data->cmd[0], "unset"))
+		sleep(1);
 	else
 		return(1);
 	// 	if (buildinP2(list, mini, num))
@@ -67,7 +75,6 @@ int	buildin_2(t_node *data)
 
 int	buildin_1(t_node *data)
 {	
-		
 	// if (!l->cmd[0] || !list->cmd[0][0])
 	// 	num += 0;
 	if (!ft_strcmp(data->cmd[0], "pwd"))
@@ -78,6 +85,8 @@ int	buildin_1(t_node *data)
 		cmd_cd(data);
 	else if (!ft_strcmp(data->cmd[0], "env"))
 		env_f(data);
+	else if (!ft_strcmp(data->cmd[0], "unset"))
+		unset_f(data);	
 	else if(buildin_2(data))
 		return(1);
 	// 	if (buildinP2(list, mini, num))

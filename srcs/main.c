@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:49:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/10 19:40:54 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/10 20:03:53 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	lets_rock(t_node *data, char **env, char *line)
 		data->is_err = 0;
 	if (data->arg)
 	{
-		free(data->arg);
-		data->arg = NULL;
+		  free(data->arg);
+		  data->arg = NULL;
 	}
 }
 

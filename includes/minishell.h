@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/05 18:09:25 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/09 19:38:05 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ typedef struct s_node
 	int				is_pipe;
 	int				is_err;
 	int				**fd;
+	char			**env_exp;
+	char			*declare_exp;
 	struct s_node	*next;
 	t_env			*temp_env;
 	t_her			her;
@@ -101,11 +103,18 @@ void	pipe_dup(t_node *data);
 void	close_fd(t_node *data);
 //ilnurjan
 int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strjoin_free(char *s1, char *s2);
 void	pwd_f(void);
 int		buildin_1(t_node *data);
 void	cmd_cd(t_node *data);
 t_node	*ft_lstnew_i(int content);
+t_env	*ft_lstnew_env(void);
+t_env	*ft_lstlast_env(t_env *lst);
+void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	unset_f(t_node *data);
+void	export_f(t_node *data);
+// void	export_f2(t_node *data);
+void	ft_declare(t_node *data);
 void	env_f(t_node *data);
 void	exit_f(t_node *data);
 unsigned long long	ft_atoi_long(const char *str);
