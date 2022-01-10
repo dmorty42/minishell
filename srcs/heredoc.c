@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 02:10:55 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/28 03:51:35 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/09 15:49:14 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,13 @@ char	*ft_heredoc(char *line, int i, t_node *data)
 		i++;
 	stop = ft_substr(line, i + 2, j - i);
 	while (temp1 && ft_strcmp(temp1, stop))
+	{
+		free(temp1);
 		temp1 = more_lines(stop, data);
+	}
 	close(data->her.fd[1]);
 	free(line);
+	free(temp1);
+	free(stop);
 	return (temp);
 }

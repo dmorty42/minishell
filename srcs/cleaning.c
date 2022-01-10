@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:47:49 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/05 15:01:12 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:46:01 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,9 @@ void	cycle_clean(t_node *data, int flag)
 	}
 	if (flag == 1)
 		more_clean(data);
+	if (data->path)
+	{
+		free(data->path);
+		data->path = NULL;
+	}
 }

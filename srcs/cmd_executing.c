@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:38:19 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/28 03:45:54 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:47:47 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,24 @@ void	change_fd(t_node *data)
 	}
 }
 
+void	parse_path(t_node *data)
+{
+	t_env	*temp;
+
+	temp = data->env_lst;
+	while (temp)
+	{
+		if (!ft_strncmp("PATH", temp->key, 4))
+			data->path = ft_split(temp->value, ':');
+		temp = temp->next;
+	}
+}
+
 void	execute_cmd(t_node *data, char **env)
 {
 	int		pid;
 
+	parse_path(data);
 	if (data->pipe_num > 0 && data->pipe_num < data->is_pipe)
 	{
 		close(data->fd[data->pipe_num - 1][1]);

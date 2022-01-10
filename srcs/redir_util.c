@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 07:12:31 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/05 18:41:15 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/09 15:34:43 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*left_redir(char *line, int i, t_node *data)
 {
 	char	*temp;
 	char	*temp1;
+	char	*temp2;
 	char	*file_name;
 	int		j;
 
@@ -31,11 +32,18 @@ char	*left_redir(char *line, int i, t_node *data)
 	if (data->is_err == 0)
 	{
 		temp1 = ft_strdup(line + i + 1);
-		temp = ft_strjoin(temp, " ");
-		temp = ft_strjoin(temp, temp1);
+		temp2 = ft_strjoin(temp, " ");
+		free(temp);
+		temp = ft_strjoin(temp2, temp1);
 		free(temp1);
+		free(temp2);
 	}
-	free(line);
+	else
+	{
+		free(temp);
+		temp = NULL;
+	}
+		free(line);
 	return (temp);
 }
 
@@ -72,16 +80,15 @@ char	*right_redir(char *line, int i, t_node *data)
 		temp2 = ft_strjoin(temp, " ");
 		free(temp);
 		temp = ft_strjoin(temp2, temp1);
-		free(line);
 		free(temp1);
 		free(temp2);
 	}
 	else
 	{
-		free(line);
 		free(temp);
 		temp = NULL;
 	}
+	free(line);
 	return (temp);
 }
 
