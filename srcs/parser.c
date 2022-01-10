@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 19:58:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/05 18:15:31 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:14:09 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	parser(char *line, t_env *env, t_node *data)
 	line = parser_redir(line, data);
 	while (line[++i])
 	{
-		trick(line, &i, data, env);
+		line = trick(line, &i, data, env);
 		if (line[i] == ' ')
 		{
 			data->cmd = two_dim_work(data->cmd, ft_substr(line, t, i - t), &j);

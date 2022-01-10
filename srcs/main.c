@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:49:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/05 18:57:03 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:40:54 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	lets_rock(t_node *data, char **env, char *line)
 	add_history(line);
 	data->cmd_num = 1;
 	i = 0;
+	env = NULL;
 	check_syntax(line, data);
 	if (data->is_err == 0)
 		check_semicolon(line, data);
@@ -67,6 +68,11 @@ void	lets_rock(t_node *data, char **env, char *line)
 	}
 	if (data->is_err > 0)
 		data->is_err = 0;
+	if (data->arg)
+	{
+		free(data->arg);
+		data->arg = NULL;
+	}
 }
 
 int	main(int argc, char **argv, char **env)

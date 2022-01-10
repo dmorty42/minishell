@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 21:04:54 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/28 03:58:57 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:42:37 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ t_env	*parse_env(t_node *data, char **str)
 		else
 			temp->value = ft_strdup(str[i] + 1 + j);
 		temp->flag = 1;
-		if (!ft_strncmp("PATH", temp->key, j))
-			data->path = ft_split(temp->value, ':');
+		// if (!ft_strncmp("PATH", temp->key, j))
+		// 	data->path = ft_split(temp->value, ':');
 		temp->next = data->env_lst;
 		data->env_lst = temp;
 	}
