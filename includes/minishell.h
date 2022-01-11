@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/11 02:12:06 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/11 20:46:59 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_env	*ft_lstlast_env(t_env *lst);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	unset_f(t_node *data);
 void	export_f(t_node *data);
-// void	export_f2(t_node *data);
+void	export_f2(t_node *data);
 void	ft_declare(t_node *data);
 void	env_f(t_node *data);
 void	exit_f(t_node *data);

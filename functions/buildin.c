@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/11 02:48:38 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/11 20:00:15 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	buildin_2(t_node *data)
 		if (data->cmd[1])
 			export_f(data);
 		else
+		{
+			export_f2(data);	
 			ft_declare(data);
+		}
 			// export_f2(data);
 	}
 		// sleep(1);
