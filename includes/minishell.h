@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/11 20:46:59 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:17:50 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	unset_f(t_node *data);
 void	export_f(t_node *data);
 void	export_f2(t_node *data);
+void	export_add(t_node *data, int j, int i);
 void	ft_declare(t_node *data);
 void	env_f(t_node *data);
 void	exit_f(t_node *data);

@@ -6,7 +6,7 @@
 #    By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 23:22:12 by dmorty            #+#    #+#              #
-#    Updated: 2022/01/11 21:18:13 by bprovolo         ###   ########.fr        #
+#    Updated: 2022/01/12 20:18:49 by bprovolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS	=	./srcs/main.c\
 			./functions/export_f.c\
 			./functions/export_f2.c\
 			./functions/export_declare.c\
+			./functions/export_add.c\
 			./functions/unset_f.c\
 			./srcs/work_with_files.c\
 			./srcs/heredoc.c\
