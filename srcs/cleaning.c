@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:47:49 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/11 02:04:44 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/13 19:53:06 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	more_clean(t_node *data)
 		free(data->fd);
 		data->fd = NULL;
 	}
-	data->pipe_num = 10;
+	data->pipe_num = 1000;
 	data->is_pipe = 0;
 }
 
@@ -44,9 +44,14 @@ void	cmd_clean(t_node *data)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	if (data->cmd)
 	{
+		while (data->cmd[i])
+		{
+			free(data->cmd[i]);
+			i++;
+		}
 		free(data->cmd);
 		data->cmd = NULL;
 	}
@@ -81,9 +86,4 @@ void	cycle_clean(t_node *data, int flag)
 	}
 	if (flag == 1)
 		more_clean(data);
-	if (data->path)
-	{
-		free(data->path);
-		data->path = NULL;
-	}
 }

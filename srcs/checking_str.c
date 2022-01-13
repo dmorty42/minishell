@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 20:19:11 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/05 15:59:23 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/12 19:31:39 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,21 @@ int	ifkey(char c)
 
 char	*find_value(char *key, t_env *env)
 {
-	int	i;
+	int		i;
+	t_env	*temp;
 
+	temp = env;
 	i = ft_strlen(key);
-	while (env)
+	while (temp)
 	{
-		if (!ft_strncmp(key, env->key, i))
-			return (env->value);
-		env = env->next;
+		if (!ft_strncmp(key, temp->key, i))
+		{
+			free(key);
+			return (temp->value);
+		}
+		temp = temp->next;
 	}
+	free(key);
 	return ("");
 }
 

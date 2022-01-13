@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 20:05:27 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/28 03:26:57 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/12 19:35:58 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*ft_dollar(char *line, int *i, t_env *env)
 	char	*key;
 	char	*temp;
 	char	*temp2;
+	char	*temp3;
 
 	j = *i;
 	while (line[++(*i)])
@@ -29,9 +30,13 @@ char	*ft_dollar(char *line, int *i, t_env *env)
 	key = ft_substr(line, j + 1, *i - j - 1);
 	key = find_value(key, env);
 	temp2 = ft_strdup(line + *i);
-	temp = ft_strjoin(temp, key);
-	temp = ft_strjoin(temp, temp2);
+	temp3 = ft_strjoin(temp, key);
+	free(temp);
+	temp = ft_strjoin(temp3, temp2);
 	free(line);
+	free(temp2);
+	free(temp3);
+	free(key);
 	*i -= 1;
 	return (temp);
 }
@@ -40,21 +45,22 @@ char	*ft_slash(char *line, int *i)
 {
 	char	*temp;
 	char	*temp2;
+	char	*temp3;
 
 	temp = ft_substr(line, 0, *i);
 	temp2 = ft_strdup(line + *i + 1);
-	temp = ft_strjoin(temp, temp2);
+	temp3 = ft_strjoin(temp, temp2);
 	*i += 1;
 	free(line);
-	return (temp);
+	free(temp2);
+	free(temp);
+	return (temp3);
 }
 
 char	*ft_gap2(char *line, int *i, t_env *env)
 {
 	int		j;
-	char	*temp;
-	char	*temp2;
-	char	*temp3;
+	char	*temp[4];
 
 	j = *i;
 	while (line[++(*i)])
@@ -67,33 +73,39 @@ char	*ft_gap2(char *line, int *i, t_env *env)
 		if (line[*i] == '\"')
 			break ;
 	}
-	temp = ft_substr(line, 0, j);
-	temp2 = ft_substr(line, j + 1, *i - j - 1);
-	temp3 = ft_strdup(line + *i + 1);
-	temp = ft_strjoin(temp, temp2);
-	temp = ft_strjoin(temp, temp3);
+	temp[0] = ft_substr(line, 0, j);
+	temp[1] = ft_substr(line, j + 1, *i - j - 1);
+	temp[2] = ft_strdup(line + *i + 1);
+	temp[3] = ft_strjoin(temp[0], temp[1]);
+	free(temp[0]);
+	temp[0] = ft_strjoin(temp[3], temp[2]);
 	*i -= 2;
 	free(line);
-	return (temp);
+	free(temp[1]);
+	free(temp[2]);
+	free(temp[3]);
+	return (temp[0]);
 }
 
 char	*ft_gap(char *line, int *i)
 {
 	int		j;
-	char	*temp;
-	char	*temp2;
-	char	*temp3;
+	char	*temp[4];
 
 	j = *i;
 	while (line[++(*i)])
 		if (line[*i] == '\'')
 			break ;
-	temp = ft_substr(line, 0, j);
-	temp2 = ft_substr(line, j + 1, *i - j - 1);
-	temp3 = ft_strdup(line + *i + 1);
-	temp = ft_strjoin(temp, temp2);
-	temp = ft_strjoin(temp, temp3);
+	temp[0] = ft_substr(line, 0, j);
+	temp[1] = ft_substr(line, j + 1, *i - j - 1);
+	temp[2] = ft_strdup(line + *i + 1);
+	temp[3] = ft_strjoin(temp[0], temp[1]);
+	free(temp[0]);
+	free(temp[1]);
+	temp[0] = ft_strjoin(temp[3], temp[2]);
 	*i -= 1;
 	free(line);
-	return (temp);
+	free(temp[2]);
+	free(temp[3]);
+	return (temp[0]);
 }

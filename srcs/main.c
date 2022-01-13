@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:49:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/11 02:27:30 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/13 19:53:26 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init(t_node *data)
 {
 	data->cmd = NULL;
+	data->arg = NULL;
 	data->cmd_num = 1;
 	data->her.is_heredoc = 0;
 	data->r.r_num = 0;
@@ -70,7 +71,8 @@ void	lets_rock(t_node *data, char **env, char *line)
 			break ;
 		}
 		parser(data->arg[i], data->env_lst, data);
-		execute_cmd(data, env);
+		if (!data->is_err)
+			execute_cmd(data, env);
 		cycle_clean(data, 1);
 		i++;
 		data->cmd_num--;

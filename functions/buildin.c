@@ -12,7 +12,13 @@
 
 #include "../includes/minishell.h"
 
-void	pwd_f(void)
+void	output_pwd(char *str, int fd)
+{
+	ft_putstr_fd(str, fd);
+	write(fd, "\n", 1);
+}
+
+void	pwd_f(t_node *data)
 {
 	char	*buff;
 
@@ -21,8 +27,26 @@ void	pwd_f(void)
 	if (!buff[0])
 		perror("\n Error getcwd");
 	else
-		ft_putstr_fd(buff, 1);
-	write(1, "\n", 1);
+	{
+		if (data->r.r_num || data->r.x_num)
+		{
+			if (data->r.r_num)
+				output_pwd(buff, data->r.r_fd);
+			else
+				output_pwd(buff, data->r.x_fd);
+		}
+		else if (data->is_pipe)
+		{
+			// close(data->fd[0][0]);
+			output_pwd(buff, data->fd[0][1]);
+			data->pipe_num += 1;
+		}
+		else
+		{
+			ft_putstr_fd(buff, 1);
+			write(1, "\n", 1);
+		}
+	}
 	free(buff);
 }
 
@@ -85,7 +109,7 @@ int	buildin_1(t_node *data)
 	// if (!l->cmd[0] || !list->cmd[0][0])
 	// 	num += 0;
 	if (!ft_strcmp(data->cmd[0], "pwd"))
-		pwd_f();
+		pwd_f(data);
 	else if (!ft_strcmp(data->cmd[0], "echo"))
 		echo_f(data);
 	else if (!ft_strcmp(data->cmd[0], "cd"))
