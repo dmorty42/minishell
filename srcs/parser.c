@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 19:58:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/13 19:53:35 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/14 00:10:11 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,10 @@ void	parser(char *line, t_env *env, t_node *data)
 		}
 	}
 	if (data->is_err == 0 && t != ft_strlen(line))
+	{
 		data->cmd = two_dim_work(data->cmd, \
 					ft_substr(line, t, ft_strlen(line) - t), &j);
+	}
 	parse_path(data);
 	free(line);
 }

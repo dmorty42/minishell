@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:38:19 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/13 19:53:15 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/14 00:44:09 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,13 @@ void	find_binary(t_node *data, char **env)
 	while (data->path[++i])
 	{
 		temp = NULL;
-		temp = ft_strjoin(data->path[i], "/");
-		temp = ft_strjoin(temp, data->cmd[0]);
+		if (data->cmd[0][0] != '/')
+		{
+			temp = ft_strjoin(data->path[i], "/");
+			temp = ft_strjoin(temp, data->cmd[0]);
+		}
+		else
+			temp = ft_strdup(data->cmd[0]);
 		if (access(temp, X_OK) == 0)
 			execve(temp, data->cmd, env);
 	}
