@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 22:33:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/09 19:43:01 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/12 21:24:00 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 void	ft_declare(t_node *data)
 {
-	// int	i;
-	// int	j;
-	
-	// i = 0;
-	// j = 1;
-	t_env	*tmp;
-	
-	// i = 0;
-	tmp = data->env_lst;
-	while (tmp)
+	int i; 
+	int j;
+	char c;
+
+	c = 34;
+	j = 1;
+	i = 0;
+	while (data->env_exp[i])
 	{
-		// ft_putstr_fd(data->declare_exp, j);
-		// ft_putstr_fd(data->env_exp[i++], j);
-		// write(j, "\n", 1);
-		printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
-		tmp = tmp->next;
+		write(j, "declare -x ", 11);
+		ft_putstr_fd(data->env_exp[i], j);
+		write(j, &c, 1);
+		write(j, "\n", 1);
+		free(data->env_exp[i++]);
 	}
-	// free(data->env_exp);
+	free(data->env_exp);
 }

@@ -6,11 +6,56 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:00:49 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/09 21:01:09 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/12 21:29:44 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_env	*cmd_tmp(t_node *data, int j, int i)
+{
+	t_env	*tmp;
+	char	*ctmp;
+
+	tmp = data->env_lst;
+	if (j - 1 >= 0 && data->cmd[i][j - 1] == '+')
+		--j;
+	while (tmp)
+	{
+		if (tmp->key[j] == '\0')
+		{
+			ctmp = ft_substr(data->cmd[i], 0, j);
+			if (!ft_strcmp(tmp->key, ctmp))
+			{
+				free (ctmp);
+				break ;
+			}
+			free(ctmp);
+		}
+		tmp = tmp->next;
+	}
+	return (tmp);
+}
+
+static void	export_sub(int j, t_node *data, t_env *tmp, int i)
+{
+	char	*ctmp;
+
+	if (j - 1 >= 0 && data->cmd[i][j - 1] == '+')
+	{
+		ctmp = ft_strdup(data->cmd[i] + j + 1);
+		tmp->value = ft_strjoin(tmp->value, ctmp);
+		free(ctmp);
+		return ;
+	}
+	// if (!tmp->vision)
+	// 	if (!ft_strcmp(data->cmd[0], "export"))
+	// 		tmp->vision = 1;
+	free(tmp->value);
+	// tmp->value = ft_strdup(data->cmd[i]);
+		// printf("cmd = {%s}", data->cmd[i]);
+	return ;
+}
 
 int	check_export(t_node *data, int i)
 {
@@ -30,20 +75,18 @@ int	check_export(t_node *data, int i)
 	return (0);
 }
 
-// export_next()
-
 static void export_equals(t_node *data, int j, int i)
 {
 	t_env	*tmp = NULL;
 	char	*ctmp;
-// tmp = cmd_tmp(data, j, i);
+	
+	tmp = cmd_tmp(data, j, i);
 	if (tmp)
 	{
+		export_sub(j, data, tmp, i);
 		 return ;
 	}
 	tmp = ft_lstnew_env();
-	// if (j - 1 >= 0 && data->cmd[i][j - 1] == '+')
-	// 	--j;
 	if (data->cmd[i][j - 1] == '+' && data->cmd[i][j] == '=')
 	{
 		tmp->key = ft_substr(data->cmd[i], 0, j - 1);
@@ -90,8 +133,8 @@ void export_f(t_node *data)
 			++j;
 		if (data->cmd[i][j])
 			export_equals(data, j, i);
+		else
+			export_add(data, j, i);
 		// i++;
-	// 	else
-	// 		export_next()
 	}
 }
