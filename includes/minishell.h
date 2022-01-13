@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/11 02:12:06 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/13 19:51:45 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_node
 	t_her			her;
 }	t_node;
 
-void rl_replace_line();
+void	rl_replace_line();
 t_env	*parse_env(t_node *data, char **str);
 int		ft_bigstr_len(char **str);
 void	check_syntax(char *line, t_node *data);
@@ -102,6 +102,7 @@ void	add_redir(t_red *temp, t_node *data);
 void	opening_file(char *file, t_node *data, int flag);
 char	*parser_redir(char *line, t_node *data);
 char	*ft_heredoc(char *line, int i, t_node *data);
+void	opening_file(char *file, t_node *data, int flag);
 //pipes
 void	check_pipe(t_node *data, int i);
 void	execute_pipe(t_node *data, char **env);
@@ -110,7 +111,7 @@ void	close_fd(t_node *data);
 //ilnurjan
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin_free(char *s1, char *s2);
-void	pwd_f(void);
+void	pwd_f(t_node *data);
 int		buildin_1(t_node *data);
 void	cmd_cd(t_node *data);
 t_node	*ft_lstnew_i(int content);

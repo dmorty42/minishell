@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 01:04:17 by dmorty            #+#    #+#             */
-/*   Updated: 2021/12/26 19:18:36 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/12 19:03:40 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	check_pipe(t_node *data, int i)
 		}
 		data->is_pipe += 1;
 		data->temp = ft_split(data->arg[i], '|');
+		free(data->arg[i]);
 		data->arg[i] = ft_strdup(data->temp[0]);
 		data->pipe_num = 0;
 	}

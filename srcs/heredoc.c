@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 02:10:55 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/09 15:49:14 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/13 20:16:33 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ char	*ft_heredoc(char *line, int i, t_node *data)
 	char	*stop;
 	char	*temp1;
 
-	j = i + 3;
-	temp1 = ft_strdup(" ");
-	temp = ft_substr(line, 0, i - 1);
 	data->her.is_heredoc = 1;
+	if (i > 0)
+		temp = ft_substr(line, 0, i - 1);
+	else
+		temp = ft_strdup("");
 	pipe(data->her.fd);
-	while (line[j] && line[j] != ' ' && line[j] != '\t')
-		j++;
+	while (line[i] && line[i] != ' ' && line[j] != '\t')
+		i++;
+	j = i;
 	while (line[i + 2] == ' ')
 		i++;
 	stop = ft_substr(line, i + 2, j - i);

@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 00:33:10 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/11 01:47:13 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/13 19:53:56 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	sig_handler(int sig)
 {
-	sig = 0;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
+	(void)sig;
+	// g_parms.gexit = 1;
 	rl_on_new_line();
+	rl_redisplay();
+	write(1, "  \n", 3);
+	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
