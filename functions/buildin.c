@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/11 20:00:15 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/14 05:35:51 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,25 @@ void	output_pwd(char *str, int fd)
 void	pwd_f(t_node *data)
 {
 	char	*buff;
+	int		fd_out;
 
+	fd_out = 1;
+	if (data->r.r_num || data->r.x_num)
+	{
+		fd_out = data->r.r_fd;
+	}
+	if (data->is_pipe)
+	{
+		fd_out = data->fd[data->pipe_num][1];
+	}
 	buff = malloc(sizeof(char) * 1000);
 	getcwd(buff, 1000);
 	if (!buff[0])
 		perror("\n Error getcwd");
 	else
 	{
-		if (data->r.r_num || data->r.x_num)
-		{
-			if (data->r.r_num)
-				output_pwd(buff, data->r.r_fd);
-			else
-				output_pwd(buff, data->r.x_fd);
-		}
-		else if (data->is_pipe)
-		{
-			// close(data->fd[0][0]);
-			output_pwd(buff, data->fd[0][1]);
-			data->pipe_num += 1;
-		}
-		else
-		{
-			ft_putstr_fd(buff, 1);
-			write(1, "\n", 1);
-		}
+		ft_putstr_fd(buff, fd_out);
+		write(fd_out, "\n", 1);
 	}
 	free(buff);
 }
@@ -53,61 +47,67 @@ void	pwd_f(t_node *data)
 void	echo_f(t_node *data)
 {
 	int	flag;
-	int	tmp;
+	int	fd_out;
 	int	i;
 
-	tmp = 1;
+	fd_out = 1;
 	flag = 0;
-	i = 0;
-	if (!(ft_strcmp(data->cmd[i + 1], "-n")))
-		flag = 1;
-	while (data->cmd[++i])
+	i = 1;
+	if (data->r.r_num || data->r.x_num)
 	{
-		if (!ft_strcmp(data->cmd[i + flag], "$?"))
-			ft_putnbr_fd(data->exit_status, tmp);
+		fd_out = data->r.r_fd;
+	}
+	if (data->is_pipe)
+	{
+		fd_out = data->fd[data->pipe_num][1];
+	}
+	if (data->cmd[i] == NULL)
+	{
+		write(fd_out, "\n", 1);
+		return ;
+	}
+	if (!(ft_strcmp(data->cmd[i], "-n")))
+	{
+		i++;
+		flag = 1;
+	}
+	while (data->cmd[i])
+	{
+		if (!ft_strcmp(data->cmd[i], "$?"))
+			ft_putnbr_fd(data->exit_status, fd_out);
 		else
-			ft_putstr_fd(data->cmd[i + flag], tmp);
-		if (i + flag + 1 < ft_bigstr_len(data->cmd))
-			write(tmp, " ", 1);
+			ft_putstr_fd(data->cmd[i], fd_out);
+		if (i + 1 < ft_bigstr_len(data->cmd))
+			write(fd_out, " ", 1);
+		i++;
 	}
 	if (flag == 1)
 		return ;
 	if (!flag)
-		write(tmp, "\n", 1);
+		write(fd_out, "\n", 1);
 }
 
 int	buildin_2(t_node *data)
 {	
-	// if (!l->cmd[0] || !list->cmd[0][0])
-	// 	num += 0;
 	if (!ft_strcmp(data->cmd[0], "export"))
 	{
 		if (data->cmd[1])
 			export_f(data);
 		else
 		{
-			export_f2(data);	
+			export_f2(data);
 			ft_declare(data);
 		}
-			// export_f2(data);
 	}
-		// sleep(1);
 	else if (!ft_strcmp(data->cmd[0], "exit"))
 		exit_f(data);
-	else if (!ft_strcmp(data->cmd[0], "unset"))
-		sleep(1);
 	else
-		return(1);
-	// 	if (buildinP2(list, mini, num))
-	// 		return (0);
-	// mini->lastCMD = 1;
+		return (1);
 	return (0);
 }
 
 int	buildin_1(t_node *data)
 {	
-	// if (!l->cmd[0] || !list->cmd[0][0])
-	// 	num += 0;
 	if (!ft_strcmp(data->cmd[0], "pwd"))
 		pwd_f(data);
 	else if (!ft_strcmp(data->cmd[0], "echo"))
@@ -118,10 +118,7 @@ int	buildin_1(t_node *data)
 		env_f(data);
 	else if (!ft_strcmp(data->cmd[0], "unset"))
 		unset_f(data);
-	else if(buildin_2(data))
-		return(1);
-	// 	if (buildinP2(list, mini, num))
-	// 		return (0);
-	// mini->lastCMD = 1;
+	else if (buildin_2(data))
+		return (1);
 	return (0);
 }

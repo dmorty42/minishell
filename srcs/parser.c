@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 19:58:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/14 00:10:11 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/14 02:46:50 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,16 @@ char	*ft_tilde(char *line, int *i, t_node *data)
 	char	*temp;
 	char	*temp1;
 	char	*temp2;
-	t_env	*env;
 
 	j = *i;
-	env = data->env_lst;
 	temp = ft_substr(line, 0, j);
-	while (ft_strncmp(env->key, \
-			"HOME", ft_strlen(env->key)))
-		env = env->next;
 	temp1 = ft_strdup(line + j + 1);
-	temp2 = ft_strjoin(temp, env->value);
+	temp2 = ft_strjoin(temp, data->home);
 	free(temp);
 	temp = ft_strjoin(temp2, temp1);
 	free(temp2);
 	free(temp1);
 	free(line);
-	*i += ft_strlen(env->value);
 	return (temp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:38:19 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/14 00:44:09 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/14 01:36:05 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	execute_cmd(t_node *data, char **env)
 	int		pid;
 	int		i;
 
-	pid = 0;
+	pid = 10;
 	if (data->pipe_num > 0 && data->pipe_num < data->is_pipe)
 	{
 		close(data->fd[data->pipe_num - 1][1]);
@@ -94,5 +94,7 @@ void	execute_cmd(t_node *data, char **env)
 		data->exit_status = i / 256;
 	}
 	if (pid > 0 && data->pipe_num < data->is_pipe - 1)
+	{
 		execute_pipe(data, env);
+	}
 }
