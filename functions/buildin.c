@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/14 05:35:51 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/17 19:33:05 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,9 @@ void	pwd_f(t_node *data)
 
 	fd_out = 1;
 	if (data->r.r_num || data->r.x_num)
-	{
 		fd_out = data->r.r_fd;
-	}
 	if (data->is_pipe)
-	{
 		fd_out = data->fd[data->pipe_num][1];
-	}
 	buff = malloc(sizeof(char) * 1000);
 	getcwd(buff, 1000);
 	if (!buff[0])
@@ -54,13 +50,9 @@ void	echo_f(t_node *data)
 	flag = 0;
 	i = 1;
 	if (data->r.r_num || data->r.x_num)
-	{
 		fd_out = data->r.r_fd;
-	}
 	if (data->is_pipe)
-	{
 		fd_out = data->fd[data->pipe_num][1];
-	}
 	if (data->cmd[i] == NULL)
 	{
 		write(fd_out, "\n", 1);
@@ -94,10 +86,7 @@ int	buildin_2(t_node *data)
 		if (data->cmd[1])
 			export_f(data);
 		else
-		{
 			export_f2(data);
-			ft_declare(data);
-		}
 	}
 	else if (!ft_strcmp(data->cmd[0], "exit"))
 		exit_f(data);

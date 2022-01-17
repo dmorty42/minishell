@@ -3,14 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   export_f2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 20:11:51 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/14 05:35:28 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/17 20:51:52 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	quotes_add_2(t_node *data, int i, int j)
+{
+	char	*tmp;
+	char	*tmp2;
+
+	if (data->env_lst->key && data->env_lst->value)
+	{
+		tmp = ft_substr(data->env_exp[i], 0, j + 1);
+		tmp2 = data->env_exp[i];
+		data->env_exp[i] = ft_strdup(tmp2 + j + 1);
+		free(tmp2);
+		tmp2 = data->env_exp[i];
+		data->env_exp[i] = ft_strjoin("\"", tmp2);
+		data->env_exp[i] = ft_strjoin_free(data->env_exp[i], "\"");
+		free(tmp2);
+		tmp2 = data->env_exp[i];
+		data->env_exp[i] = ft_strjoin_free(tmp, tmp2);
+		free(tmp2);
+	}
+}
+
+static void	quotes_add(t_node *data)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = -1;
+	while (data->env_exp[++i])
+	{
+		j = 0;
+		while (data->env_exp[i][j] != '=' && data->env_exp[i][j])
+			++j;
+		if (!data->env_exp[i][j])
+			continue ;
+		quotes_add_2(data, i, j);
+	}
+}
 
 static int	export_f2_nn(t_node *data, int i, int j)
 {
@@ -61,6 +100,8 @@ static void	export_f2_next(t_node	*data)
 		else
 			++i;
 	}
+	quotes_add(data);
+	ft_declare(data);
 }
 
 void	export_f2(t_node *data)
@@ -69,7 +110,7 @@ void	export_f2(t_node *data)
 	t_env	*tmp;
 	char	*ctmp;
 
-	ctmp = 0;
+	ctmp = NULL;
 	i = 0;
 	tmp = data->env_lst;
 	while (tmp)
@@ -77,15 +118,23 @@ void	export_f2(t_node *data)
 		++i;
 		tmp = tmp->next;
 	}
-	data->env_exp = (char **)malloc(sizeof(char *) * i + 1);
-	i = 0;
+	data->env_exp = (char **)malloc(sizeof(char *) * (i + 1));
 	tmp = data->env_lst;
+	i = 0;
 	while (tmp)
 	{
-		ctmp = ft_strjoin(tmp->key, "=\"");
-		data->env_exp[i] = ft_strjoin(ctmp, tmp->value);
-		tmp = tmp->next;
-		i++;
+		if (tmp->flag == 0)
+		{
+			if (tmp->key && tmp->value)
+			{
+				ctmp = ft_strjoin(tmp->key, "=");
+				data->env_exp[i] = ft_strjoin_free(ctmp, tmp->value);
+			}
+			else
+				data->env_exp[i] = ft_strdup(tmp->key);
+			i++;
+			tmp = tmp->next;
+		}
 	}
 	data->env_exp[i] = NULL;
 	export_f2_next(data);

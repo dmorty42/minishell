@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 20:10:34 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/12 21:24:51 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/17 20:14:31 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ void	export_add(t_node *data, int j, int i)
 	{
 		tmp = ft_lstnew_env();
 		tmp->key = ft_substr(data->cmd[i], 0, j);
-		tmp->value = ft_strdup(data->cmd[i]);
-		// temp->vision = 1,
-		 ft_lstadd_back_env(&data->env_lst, tmp);
+		tmp->value = 0;
+		tmp->flag = 0;
+		ft_lstadd_back_env(&data->env_lst, tmp);
 	}
 	else
-		 free(ctmp);
-		// tmp->vision = 1,
+	{
+		free(ctmp);
+		tmp->flag = 0;
+	}
 }

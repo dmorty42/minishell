@@ -6,7 +6,7 @@
 #    By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 23:22:12 by dmorty            #+#    #+#              #
-#    Updated: 2022/01/12 20:18:49 by bprovolo         ###   ########.fr        #
+#    Updated: 2022/01/14 22:58:05 by bprovolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ OBJS	=	$(SRCS:.c=.o)
 			$(GCC) $(FLAG) $(C) $< $(O) $(<:.c=.o)
 
 GCC		= 	gcc
-FLAG	=	-Wall -Wextra -Werror  
+FLAG	=	-Wall -Wextra -Werror  -g
 LINE	=	-lreadline -I/Users/${USER}/.brew/opt/readline/include -L/Users/${USER}/.brew/opt/readline/lib/
 RM		=	rm -f
 C		=	-c

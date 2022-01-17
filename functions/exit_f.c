@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:44:57 by bprovolo          #+#    #+#             */
-/*   Updated: 2021/12/28 21:08:53 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/16 17:35:29 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void exit_2_f(t_node *data, int j, int hyph)
 	unsigned long long	num;
 
 	ch = 0;
-	
 	num = ft_atoi_long(data->cmd[1]);
 	ch = exit_digit(data, &j, ch);
 	if ((num > 9223372036854775807 && hyph == 1) 
@@ -58,7 +57,7 @@ static void exit_2_f(t_node *data, int j, int hyph)
 	{
 		if (hyph)
 			usleep(1);
-		else	
+		else
 			usleep(1);
 	}
 }
@@ -77,11 +76,11 @@ void	exit_f(t_node *data)
 	if (i >= 3)
 	{
 		write(2, "minishell: exit: too many arguments\n", 36);
-		// data->
 		return ;
 	}
 	if (i == 2)
 	{
+		printf("CMD={%s}\n", data->cmd[1]);
 		j = hyphen_sign(data, &hyph);
 		exit_2_f(data, j, hyph);
 	}
