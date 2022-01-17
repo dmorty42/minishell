@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:00:49 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/17 20:51:33 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/17 21:01:11 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_env	*cmd_tmp(t_node *data, int j, int i)
 		if (tmp->key[j] == '\0')
 		{
 			ctmp = ft_substr(data->cmd[i], 0, j);
-			printf("{%s}\n", ctmp);
 			if (!ft_strcmp(tmp->key, ctmp))
 			{
 				free (ctmp);
@@ -100,11 +99,12 @@ static void export_equals(t_node *data, int j, int i)
 		tmp->value = ft_strdup(&data->cmd[i][j + 1]);
 	}
 	tmp->flag = 0;
-	// if (!ft_strcmp(data->cmd[0], "export"))
-	// 	tmp->flag = 0;
 	ft_lstadd_back_env(&data->env_lst, tmp);
 }
 
+	// if (!ft_strcmp(data->cmd[0], "export"))
+	// 	tmp->flag = 0;
+	
 void export_f(t_node *data)
 {
 	int	i;

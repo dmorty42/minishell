@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_f.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:25:18 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/14 03:05:38 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/17 21:20:42 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,34 @@ static int check_unset(t_node *data, int i)
 // 	}
 // }
 
-void	find_unset(t_node *data, int i)
+void	find_unset(t_node *data, char *ctmp, t_env *tmp, t_env *tmp2)
 {
-	t_env	*temp1;
-	t_env	*temp2;
-
-	temp1 = data->env_lst;
-	while (temp1->next)
+	while (tmp->next)
 	{
-		if (!strcmp(data->cmd[i], temp1->next->key))
-		{
-			temp2 = temp1->next->next;
-			free(temp1->next->key);
-			free(temp1->next->value);
-			free(temp1->next);
-			temp1->next = temp2;
-		}
-		temp1 = temp1->next;
+		if (!ft_strcmp(tmp->key, ctmp))
+			break;
+		tmp2 = tmp;
+		tmp = tmp->next;
+	}
+	if (tmp)
+	{
+		if (tmp != data->env_lst)
+			tmp2->next = tmp->next;
+		else
+			data->env_lst = data->env_lst->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
 	}
 }
 
 void	unset_f(t_node *data)
 {
 	int		i;
+	int		j;
+	char	*ctmp;
+	t_env	*tmp;
+	t_env	*tmp2;
 
 	i = 0;
 	while (data->cmd[++i])
@@ -84,6 +89,12 @@ void	unset_f(t_node *data)
 			ft_putstr_fd("\': not a valid identifier\n", 2);
 			continue ;
 		}
-		find_unset(data, i);
+		j = 0;
+		tmp = data->env_lst;
+		j = ft_strlen(data->cmd[i]);
+		ctmp = ft_substr(data->cmd[i], 0, j);
+		tmp2 = tmp;
+		find_unset(data, ctmp, tmp, tmp2);
+		free(ctmp);
 	}
 }
