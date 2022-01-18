@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 19:58:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/18 16:12:41 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 18:50:52 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,16 @@ char	*space_prepare(char *line)
 	char	*temp;
 	char	*temp2;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	temp = NULL;
 	temp = (char *)malloc(count_space(line) + 1);
-	while (line[i])
+	while (line[++i])
 	{
 		if ((line[i + 1] && line[i] != ' ' ) || line[i + 1] != ' ')
 		{
 			temp[j] = line[i];
 			j++;
 		}
-		i++;
 	}
 	temp[j] = '\0';
 	free(line);
