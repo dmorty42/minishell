@@ -6,11 +6,20 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 20:10:34 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/17 20:14:31 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/18 19:16:38 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_env	*export_add2(t_node *data, int j, int i, t_env	*tmp)
+{
+	tmp = ft_lstnew_env();
+	tmp->key = ft_substr(data->cmd[i], 0, j);
+	tmp->value = 0;
+	tmp->flag = 0;
+	return (tmp);
+}
 
 void	export_add(t_node *data, int j, int i)
 {
@@ -31,10 +40,7 @@ void	export_add(t_node *data, int j, int i)
 	}
 	if (!tmp)
 	{
-		tmp = ft_lstnew_env();
-		tmp->key = ft_substr(data->cmd[i], 0, j);
-		tmp->value = 0;
-		tmp->flag = 0;
+		tmp = export_add2(data, j, i, tmp);
 		ft_lstadd_back_env(&data->env_lst, tmp);
 	}
 	else

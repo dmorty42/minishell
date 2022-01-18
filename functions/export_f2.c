@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_f2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 20:11:51 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 16:56:45 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 19:46:37 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,7 @@ void	export_f2(t_node *data)
 	ctmp = NULL;
 	i = 0;
 	tmp = data->env_lst;
-	while (tmp)
-	{
-		++i;
-		tmp = tmp->next;
-	}
-	data->env_exp = (char **)malloc(sizeof(char *) * (i + 1));
-	tmp = data->env_lst;
-	i = 0;
+	data->env_exp = export_malloc(tmp, i, data);
 	while (tmp)
 	{
 		if (tmp->flag == 0)
@@ -128,11 +121,10 @@ void	export_f2(t_node *data)
 			if (tmp->key && tmp->value)
 			{
 				ctmp = ft_strjoin(tmp->key, "=");
-				data->env_exp[i] = ft_strjoin_free(ctmp, tmp->value);
+				data->env_exp[i++] = ft_strjoin_free(ctmp, tmp->value);
 			}
 			else
-				data->env_exp[i] = ft_strdup(tmp->key);
-			i++;
+				data->env_exp[i++] = ft_strdup(tmp->key);
 			tmp = tmp->next;
 		}
 	}

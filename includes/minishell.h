@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/18 17:13:26 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 20:09:57 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 # include "signal.h"
-//ilnurjan
 # include <dirent.h>
 # include <errno.h>
-//ilnurjan
 # define LEFT 1
 # define RIGHT 2
 # define X_RIGHT 3
@@ -96,7 +94,6 @@ char				**lst_to_array(t_node *data);
 void				signal_work(void);
 void				sig_handler(int sig);
 void				parse_path(t_node *data);
-//redirect
 char				*ft_redirect(char *line, int *i, t_node *data);
 int					check_red(char *line, int j);
 void				add_redir(t_red *temp, t_node *data);
@@ -105,12 +102,10 @@ char				*parser_redir(char *line, t_node *data);
 char				*ft_heredoc(char *line, int i, t_node *data);
 void				opening_file(char *file, t_node *data, int flag);
 void				change_out(t_node *data, int *fd);
-//pipes
 void				check_pipe(t_node *data, int i);
 void				execute_pipe(t_node *data, char **env);
 void				pipe_dup(t_node *data);
 void				close_fd(t_node *data);
-//ilnurjan
 int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strjoin_free(char *s1, char *s2);
 void				pwd_f(t_node *data);
@@ -130,5 +125,6 @@ void				exit_f(t_node *data);
 void				find_direct(t_node *data, char **path);
 char				*find_old_pwd(t_node *data);
 unsigned long long	ft_atoi_long(const char *str);
-//ilnurjan
+char				**export_malloc(t_env *tmp, int i, t_node *data);
+char				*export_value(t_env *tmp, t_node *data, int i, int j);
 #endif

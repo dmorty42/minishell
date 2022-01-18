@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:44:57 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/17 21:00:38 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/18 19:13:32 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static int	exit_digit(t_node *data, int *j, int ch)
 	return (ch);
 }
 
-static int hyphen_sign(t_node *data, int *hyph)
+static int	hyphen_sign(t_node *data, int *hyph)
 {
 	int	n;
 
-	n = 0;	
+	n = 0;
 	if (data->cmd[1][0] == '-')
 	{
-		*hyph = *hyph *-1;
+		*hyph = *hyph * -1;
 		n++;
 	}
 	if (data->cmd[1][0] == '+')
@@ -38,15 +38,15 @@ static int hyphen_sign(t_node *data, int *hyph)
 	return (n);
 }
 
-static void exit_2_f(t_node *data, int j, int hyph)
+static void	exit_2_f(t_node *data, int j, int hyph)
 {
-	int	ch;
+	int					ch;
 	unsigned long long	num;
 
 	ch = 0;
 	num = ft_atoi_long(data->cmd[1]);
 	ch = exit_digit(data, &j, ch);
-	if ((num > 9223372036854775807 && hyph == 1) 
+	if ((num > 9223372036854775807 && hyph == 1)
 		|| (num <= 9223372036854775807 && hyph == -1))
 	{
 		write(2, "minishell: exit: ", 17);
@@ -65,8 +65,8 @@ static void exit_2_f(t_node *data, int j, int hyph)
 void	exit_f(t_node *data)
 {
 	int	i;
-	int j;
-	int hyph;
+	int	j;
+	int	hyph;
 
 	i = 0;
 	hyph = 1;
@@ -80,7 +80,6 @@ void	exit_f(t_node *data)
 	}
 	if (i == 2)
 	{
-		printf("CMD={%s}\n", data->cmd[1]);
 		j = hyphen_sign(data, &hyph);
 		exit_2_f(data, j, hyph);
 	}

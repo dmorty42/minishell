@@ -6,7 +6,7 @@
 #    By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 23:22:12 by dmorty            #+#    #+#              #
-#    Updated: 2022/01/14 22:58:05 by bprovolo         ###   ########.fr        #
+#    Updated: 2022/01/18 20:04:23 by bprovolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ SRCS	=	./srcs/main.c\
 			./utils/ft_lstnew_i.c\
 			./utils/ft_atoi_long.c\
 			./utils/ft_strjoin_free.c\
+			./utils/export_malloc.c\
+			./utils/export_value.c\
 			./functions/buildin.c\
 			./functions/cd_f.c\
 			./srcs/redir_util.c\
@@ -49,7 +51,7 @@ OBJS	=	$(SRCS:.c=.o)
 			$(GCC) $(FLAG) $(C) $< $(O) $(<:.c=.o)
 
 GCC		= 	gcc
-FLAG	=	-Wall -Wextra -Werror  -g
+FLAG	=	-Wall -Wextra -Werror
 LINE	=	-lreadline -I/Users/${USER}/.brew/opt/readline/include -L/Users/${USER}/.brew/opt/readline/lib/
 RM		=	rm -f
 C		=	-c

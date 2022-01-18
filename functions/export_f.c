@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_f.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:00:49 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 16:56:18 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 20:10:14 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	check_export(t_node *data, int i)
 static void	export_equals(t_node *data, int j, int i)
 {
 	t_env	*tmp;
-	char	*ctmp;
 
 	tmp = cmd_tmp(data, j, i);
 	if (tmp)
@@ -86,12 +85,7 @@ static void	export_equals(t_node *data, int j, int i)
 	if (data->cmd[i][j - 1] == '+' && data->cmd[i][j] == '=')
 	{
 		tmp->key = ft_substr(data->cmd[i], 0, j - 1);
-		ctmp = ft_strdup(&data->cmd[i][j + 1]);
-		if (tmp->value)
-			tmp->value = ft_strjoin_free(tmp->value, ctmp);
-		else
-			tmp->value = ft_strdup(&data->cmd[i][j + 1]);
-		free(ctmp);
+		tmp->value = export_value(tmp, data, i, j);
 	}
 	else
 	{
