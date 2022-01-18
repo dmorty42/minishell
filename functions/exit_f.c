@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:44:57 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 19:13:32 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:47:53 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,20 @@ static void	exit_2_f(t_node *data, int j, int hyph)
 	ch = 0;
 	num = ft_atoi_long(data->cmd[1]);
 	ch = exit_digit(data, &j, ch);
-	if ((num > 9223372036854775807 && hyph == 1)
+	if (ch || (num > 9223372036854775807 && hyph == 1)
 		|| (num <= 9223372036854775807 && hyph == -1))
 	{
 		write(2, "minishell: exit: ", 17);
 		write(2, data->cmd[1], ft_strlen(data->cmd[1]));
 		write(2, ": numeric argument required\n", 29);
+		data->exit_status = 255;
 	}
 	else
 	{
 		if (hyph)
-			usleep(1);
+			data->exit_status = (int)(num % 256);
 		else
-			usleep(1);
+			data->exit_status = (256 + (int)num % 256) % 256;
 	}
 }
 
@@ -76,6 +77,7 @@ void	exit_f(t_node *data)
 	if (i >= 3)
 	{
 		write(2, "minishell: exit: too many arguments\n", 36);
+		data->exit_status = 1;
 		return ;
 	}
 	if (i == 2)
@@ -83,5 +85,5 @@ void	exit_f(t_node *data)
 		j = hyphen_sign(data, &hyph);
 		exit_2_f(data, j, hyph);
 	}
-	exit(EXIT_SUCCESS);
+	exit(data->exit_status);
 }

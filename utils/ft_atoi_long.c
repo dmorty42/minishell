@@ -6,7 +6,7 @@
 /*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 21:37:48 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/16 17:36:49 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:52:54 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,6 @@ static unsigned long long	ft_atoi_s(char *viv, int k)
 	return (res);
 }
 
-static void	ft_atoi_check(const char *str)
-{
-	int	j;
-
-	j = 0;
-	while (str[j])
-	{
-		if ((str[j] < '0' || str[j] > '9') && str[j] != '\0')
-		{
-			write(2, "minishell: exit: ", 17);
-			write(2, str, ft_strlen(str));
-			write(2, ": numeric argument required\n", 29);
-		}	
-		j++;
-	}
-}
-
 unsigned long long	ft_atoi_long(const char *str)
 {
 	int		m;
@@ -63,7 +46,6 @@ unsigned long long	ft_atoi_long(const char *str)
 			m = m * -1;
 		str++;
 	}
-	ft_atoi_check(str);
 	while ((*str >= '0') && (*str <= '9'))
 	{
 		cifr[s] = *str;

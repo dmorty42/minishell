@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   work_with_files.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:20:26 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/18 19:06:31 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 20:37:21 by bprovolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	left_open(t_node *data, char *file)
 	else
 		close(data->r.l_fd);
 	data->r.l_fd = fd;
+	return (fd);
 }
 
 void	opening_file(char *file, t_node *data, int flag)
