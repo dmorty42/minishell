@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_declare.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 22:33:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/17 19:31:15 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:32:56 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 void	ft_declare(t_node *data)
 {
-	int	i; 
-	int	j;
+	int	i;
+	int	fd_out;
 
-	j = 1;
+	fd_out = 1;
+	if (data->r.r_num || data->r.x_num)
+		fd_out = data->r.r_fd;
+	if (data->is_pipe)
+		fd_out = data->fd[data->pipe_num][1];
 	i = 0;
 	while (data->env_exp[i])
 	{
-		write(j, "declare -x ", 11);
-		ft_putstr_fd(data->env_exp[i], j);
-		// write(j, &c, 1);
-		write(j, "\n", 1);
+		write(fd_out, "declare -x ", 11);
+		ft_putstr_fd(data->env_exp[i], fd_out);
+		write(fd_out, "\n", 1);
 		free(data->env_exp[i++]);
 	}
 	free(data->env_exp);

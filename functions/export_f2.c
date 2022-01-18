@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_f2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 20:11:51 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/17 20:51:52 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/18 16:56:45 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,65 +138,5 @@ void	export_f2(t_node *data)
 	}
 	data->env_exp[i] = NULL;
 	export_f2_next(data);
+	data->exit_status = 0;
 }
-
-// int	lst_size(t_node *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	data->temp_env = data->env_lst;
-// 	while (data->temp_env)
-// 	{
-// 		data->temp_env = data->temp_env->next;
-// 		i++;
-// 	}
-// 	return (i);
-// }
-
-// void	export_f2(t_node *data)
-// {
-// 	int		diff;
-// 	int		last;
-// 	t_env	*temp1;
-// 	t_env	*temp2;
-// 	int		len;
-
-// 	diff = 0;
-// 	last = 0;
-// 	temp2 = data->env_lst;
-// 	temp1 = data->env_lst->next;
-// 	len = lst_size(data);
-// 	while (len)
-// 	{
-// 		diff = ft_strcmp(temp1->key, temp2->key);
-// 		if (temp1->flag == 0 && diff > last)
-// 		{
-// 			last = diff;
-// 			temp2 = temp1;
-// 		}
-// 		else if (temp1->flag == 0 && diff == 0)
-// 		{
-// 			temp2->flag = len;
-// 			temp2 = data->env_lst;
-// 			last = -100;
-// 			len--;
-// 		}
-// 		temp1 = temp1->next;
-// 		if (!temp1)
-// 			temp1 = data->env_lst;
-// 	}
-// 	temp1 = data->env_lst;
-// 	len = 1;
-// 	while (len <= lst_size(data))
-// 	{
-// 		if (len == temp1->flag)
-// 		{
-// 			printf("%s%s%s\n", temp1->key, "=", temp1->value);
-// 			len++;
-// 		}
-// 		temp1 = temp1->next;
-// 		if (!temp1)
-// 			temp1 = data->env_lst;
-// 	}
-// }

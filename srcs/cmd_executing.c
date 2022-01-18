@@ -6,34 +6,36 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:38:19 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/14 01:36:05 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 16:51:54 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	find_binary(t_node *data, char **env)
+void	find_binary(t_node *data)
 {
 	char	*temp;
 	int		i;
 
 	i = -1;
 	temp = NULL;
-	while (data->path[++i])
+	while (++i < 10)
 	{
 		temp = NULL;
 		if (data->cmd[0][0] != '/')
 		{
+			if (!data->path)
+				break ;
 			temp = ft_strjoin(data->path[i], "/");
 			temp = ft_strjoin(temp, data->cmd[0]);
 		}
 		else
 			temp = ft_strdup(data->cmd[0]);
 		if (access(temp, X_OK) == 0)
-			execve(temp, data->cmd, env);
+			execve(temp, data->cmd, lst_to_array(data));
 	}
 	printf("minishell: %s: command not found\n", data->cmd[0]);
-	exit(EXIT_FAILURE);
+	exit(127);
 }
 
 void	change_fd(t_node *data)
@@ -58,6 +60,7 @@ void	parse_path(t_node *data)
 	t_env	*temp;
 
 	temp = data->env_lst;
+	data->path = NULL;
 	while (temp)
 	{
 		if (!ft_strncmp("PATH", temp->key, 4))
@@ -71,11 +74,9 @@ void	execute_cmd(t_node *data, char **env)
 	int		pid;
 	int		i;
 
-	pid = 10;
+	pid = 0;
 	if (data->pipe_num > 0 && data->pipe_num < data->is_pipe)
-	{
 		close(data->fd[data->pipe_num - 1][1]);
-	}
 	if (buildin_1(data))
 	{
 		pid = fork();
@@ -83,18 +84,16 @@ void	execute_cmd(t_node *data, char **env)
 		{
 			change_fd(data);
 			if (!data->is_err)
-				find_binary(data, env);
+				find_binary(data);
 			else
 				exit(EXIT_FAILURE);
 		}
 	}
-	if (pid > 0)
+	if (pid != 0)
 	{
 		waitpid(pid, &i, 0);
 		data->exit_status = i / 256;
 	}
 	if (pid > 0 && data->pipe_num < data->is_pipe - 1)
-	{
 		execute_pipe(data, env);
-	}
 }

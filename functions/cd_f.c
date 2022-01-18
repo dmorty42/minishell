@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:38:14 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/14 03:11:04 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 17:07:12 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*find_old_pwd(t_node *data)
 	}
 	if (!temp)
 	{
-		write(2, "OLDPWD not set\n", 15);
+		write(2, "minishell: cd: OLDPWD not set\n", 15);
 		data->is_err += 1;
 	}
 	return (temp);
@@ -82,36 +82,22 @@ void	cmd_cd(t_node *data)
 
 	path = NULL;
 	dir = NULL;
-	if (!data->cmd[1])
-	{
-		path = ft_strjoin(data->home, "/");
-	}
-	else if (!ft_strcmp(data->cmd[1], "-"))
-	{
-		path = find_old_pwd(data);
-		if (path)
-		{
-			write(2, path, ft_strlen(path));
-			write(2, "\n", 1);
-		}
-	}
-	else if (data->cmd[1])
-		path = ft_strdup(data->cmd[1]);
+	find_direct(data, &path);
 	if (path)
 		dir = opendir(path);
-	if (data->is_err)
+	if (data->is_err || (dir) == NULL)
 	{
+		if (dir == NULL)
+		{
+			ft_putstr_fd(strerror (errno), 2);
+			write(2, "\n", 1);
+		}
 		free(path);
-		return ;
-	}
-	if ((dir) == NULL)
-	{
-		ft_putstr_fd(strerror (errno), 2);
-		write(2, "\n", 1);
-		free(path);
+		data->exit_status = 1;
 		return ;
 	}
 	change_dir(data, path);
 	closedir(dir);
 	free(path);
+	data->exit_status = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_f.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:00:49 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/17 21:01:11 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/18 16:56:18 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ int	check_export(t_node *data, int i)
 	return (0);
 }
 
-static void export_equals(t_node *data, int j, int i)
+static void	export_equals(t_node *data, int j, int i)
 {
 	t_env	*tmp;
 	char	*ctmp;
-	
+
 	tmp = cmd_tmp(data, j, i);
 	if (tmp)
 	{
@@ -102,10 +102,7 @@ static void export_equals(t_node *data, int j, int i)
 	ft_lstadd_back_env(&data->env_lst, tmp);
 }
 
-	// if (!ft_strcmp(data->cmd[0], "export"))
-	// 	tmp->flag = 0;
-	
-void export_f(t_node *data)
+void	export_f(t_node *data)
 {
 	int	i;
 	int	j;
@@ -119,7 +116,7 @@ void export_f(t_node *data)
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(data->cmd[i], 2);
 			ft_putstr_fd("\': not a valid identifier\n", 2);
-			++i;
+			data->exit_status = 1;
 			continue ;
 		}
 		while (data->cmd[i][j] != '=' && data->cmd[i][j])
@@ -128,6 +125,6 @@ void export_f(t_node *data)
 			export_equals(data, j, i);
 		else
 			export_add(data, j, i);
-		// i++;
+		data->exit_status = 0;
 	}
 }
