@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:20:26 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/05 18:32:31 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 19:06:31 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,25 @@ void	smth_wrong(char *file, t_node *data)
 	printf("minishell: %s: %s\n", file, strerror(errno));
 }
 
+int	left_open(t_node *data, char *file)
+{
+	int	fd;
+
+	fd = 0;
+	fd = open(file, O_RDONLY, 0644);
+	if (data->r.l_num == 0)
+		data->r.l_num = 1;
+	else
+		close(data->r.l_fd);
+	data->r.l_fd = fd;
+}
+
 void	opening_file(char *file, t_node *data, int flag)
 {
 	int	fd;
 
 	if (flag == LEFT)
-	{
-		fd = open(file, O_RDONLY, 0644);
-		if (data->r.l_num == 0)
-			data->r.l_num = 1;
-		else
-			close(data->r.l_fd);
-		data->r.l_fd = fd;
-	}
+		fd = left_open(data, file);
 	else
 	{
 		if (flag == RIGHT)

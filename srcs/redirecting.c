@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 22:23:15 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/14 16:38:35 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 18:40:12 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*parser_redir(char *line, t_node *data)
 		else if (line[i] == '>' || line[i] == '<')
 		{
 			line = ft_redirect(line, &i, data);
+			i = -1;
 		}
 	}
 	return (line);

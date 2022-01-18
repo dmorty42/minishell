@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 02:10:55 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/18 17:41:38 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 18:42:48 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*trim_her(char *line)
 		temp[1] = ft_strdup("");
 	temp[0] = ft_strjoin_free(temp[0], temp[1]);
 	free(temp[1]);
-	printf("temp = [%s]\n", temp[0]);
+	free(line);
 	return (temp[0]);
 }
 
@@ -77,7 +77,6 @@ char	*ft_heredoc(char *line, int i, t_node *data)
 	char	*stop;
 	char	*temp1;
 
-	temp = NULL;
 	data->her.is_heredoc = 1;
 	temp1 = ft_strdup(" ");
 	pipe(data->her.fd);
@@ -94,7 +93,6 @@ char	*ft_heredoc(char *line, int i, t_node *data)
 	}
 	close(data->her.fd[1]);
 	temp = trim_her(line);
-	free(line);
 	free(temp1);
 	temp1 = ft_strjoin_free(temp, " ");
 	free(stop);

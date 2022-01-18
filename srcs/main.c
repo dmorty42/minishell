@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:49:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/13 19:53:26 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/18 18:49:16 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,6 @@ void	lets_rock(t_node *data, char **env, char *line)
 		i++;
 		data->cmd_num--;
 	}
-	if (data->is_err > 0)
-		data->is_err = 0;
-	if (data->arg)
-	{
-		free(data->arg);
-		data->arg = NULL;
-	}
 }
 
 int	main(int argc, char **argv, char **env)
@@ -108,5 +101,7 @@ int	main(int argc, char **argv, char **env)
 		if (line && ft_strlen(line) > 0)
 			lets_rock(data, env, line);
 		free(line);
+		if (data->arg)
+			free(data->arg);
 	}
 }
