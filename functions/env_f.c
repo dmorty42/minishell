@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 23:07:24 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/19 20:31:24 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 21:29:14 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	env_f(t_node *data)
 	temp = data->env_lst;
 	if (data->r.r_num || data->r.x_num)
 		fd_out = data->r.r_fd;
-	if (data->is_pipe)
+	if (data->pipe_num < data->is_pipe - 1)
 		fd_out = data->fd[data->pipe_num][1];
 	while (temp)
 	{
@@ -44,7 +44,7 @@ void	change_out(t_node *data, int *fd)
 {
 	if (data->r.r_num || data->r.x_num)
 		*fd = data->r.r_fd;
-	if (data->is_pipe)
+	if (data->pipe_num < data->is_pipe - 1)
 		*fd = data->fd[data->pipe_num][1];
 }
 

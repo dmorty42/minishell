@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/19 19:25:57 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 21:28:07 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	pwd_f(t_node *data)
 	fd_out = 1;
 	if (data->r.r_num || data->r.x_num)
 		fd_out = data->r.r_fd;
-	if (data->is_pipe)
+	if (data->pipe_num < data->is_pipe - 1)
 		fd_out = data->fd[data->pipe_num][1];
 	buff = malloc(sizeof(char) * 1000);
 	getcwd(buff, 1000);

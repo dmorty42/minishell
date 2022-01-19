@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 18:29:07 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/09 15:17:45 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 21:24:27 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ void	check_syntax(char *line, t_node *data)
 		printf("syntax error near unexpected token '%c'\n", err);
 		data->is_err += 1;
 	}
-	check_double_semi(line, data);
+	if (data->is_err == 0)
+		check_double_semi(line, data);
 }
