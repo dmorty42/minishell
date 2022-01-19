@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:25:18 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 17:09:31 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 19:25:57 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	unset_f(t_node *data, int i)
 			ft_putstr_fd("minishell: unset: `", 2);
 			ft_putstr_fd(data->cmd[i], 2);
 			ft_putstr_fd("\': not a valid identifier\n", 2);
-			data->exit_status = 1;
+			g_exit_status = 1;
 			continue ;
 		}
 		j = 0;
@@ -76,6 +76,6 @@ void	unset_f(t_node *data, int i)
 		tmp2 = tmp;
 		find_unset(data, ctmp, tmp, tmp2);
 		free(ctmp);
-		data->exit_status = 0;
+		g_exit_status = 0;
 	}
 }

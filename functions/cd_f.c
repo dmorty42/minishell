@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:38:14 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 17:07:12 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 19:25:57 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,11 @@ void	cmd_cd(t_node *data)
 			write(2, "\n", 1);
 		}
 		free(path);
-		data->exit_status = 1;
+		g_exit_status = 1;
 		return ;
 	}
 	change_dir(data, path);
 	closedir(dir);
 	free(path);
-	data->exit_status = 0;
+	g_exit_status = 0;
 }

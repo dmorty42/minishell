@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 23:07:24 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 17:07:19 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 20:31:24 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	env_f(t_node *data)
 		}
 		temp = temp->next;
 	}
-	data->exit_status = 0;
+	g_exit_status = 0;
 }
 
 void	change_out(t_node *data, int *fd)

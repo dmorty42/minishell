@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   work_with_files.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:20:26 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/18 20:37:21 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:51:44 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	smth_wrong(char *file, t_node *data)
 {
 	data->is_err += 1;
 	printf("minishell: %s: %s\n", file, strerror(errno));
+	g_exit_status = 1;
 }
 
 int	left_open(t_node *data, char *file)

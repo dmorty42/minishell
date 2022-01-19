@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_f.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:44:57 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 20:47:53 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:25:57 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ static void	exit_2_f(t_node *data, int j, int hyph)
 		write(2, "minishell: exit: ", 17);
 		write(2, data->cmd[1], ft_strlen(data->cmd[1]));
 		write(2, ": numeric argument required\n", 29);
-		data->exit_status = 255;
+		g_exit_status = 255;
 	}
 	else
 	{
 		if (hyph)
-			data->exit_status = (int)(num % 256);
+			g_exit_status = (int)(num % 256);
 		else
-			data->exit_status = (256 + (int)num % 256) % 256;
+			g_exit_status = (256 + (int)num % 256) % 256;
 	}
 }
 
@@ -77,7 +77,7 @@ void	exit_f(t_node *data)
 	if (i >= 3)
 	{
 		write(2, "minishell: exit: too many arguments\n", 36);
-		data->exit_status = 1;
+		g_exit_status = 1;
 		return ;
 	}
 	if (i == 2)
@@ -85,5 +85,5 @@ void	exit_f(t_node *data)
 		j = hyphen_sign(data, &hyph);
 		exit_2_f(data, j, hyph);
 	}
-	exit(data->exit_status);
+	exit(g_exit_status);
 }

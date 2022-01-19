@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_f.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:00:49 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 20:10:14 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:25:57 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	export_f(t_node *data)
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(data->cmd[i], 2);
 			ft_putstr_fd("\': not a valid identifier\n", 2);
-			data->exit_status = 1;
+			g_exit_status = 1;
 			continue ;
 		}
 		while (data->cmd[i][j] != '=' && data->cmd[i][j])
@@ -119,6 +119,6 @@ void	export_f(t_node *data)
 			export_equals(data, j, i);
 		else
 			export_add(data, j, i);
-		data->exit_status = 0;
+		g_exit_status = 0;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 18:26:31 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 16:47:30 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 19:25:57 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	echo_output(t_node *data, int *i, int fd_out)
 {
 	if (!ft_strcmp(data->cmd[*i], "$?"))
-		ft_putnbr_fd(data->exit_status, fd_out);
+		ft_putnbr_fd(g_exit_status, fd_out);
 	else
 		ft_putstr_fd(data->cmd[*i], fd_out);
 	if (*i + 1 < ft_bigstr_len(data->cmd))
@@ -38,7 +38,7 @@ void	pwd_f(t_node *data)
 	if (!buff[0])
 	{
 		perror("\n Error getcwd");
-		data->exit_status = 1;
+		g_exit_status = 1;
 		return ;
 	}
 	else
@@ -47,7 +47,7 @@ void	pwd_f(t_node *data)
 		write(fd_out, "\n", 1);
 	}
 	free(buff);
-	data->exit_status = 0;
+	g_exit_status = 0;
 }
 
 void	echo_f(t_node *data)
@@ -75,7 +75,7 @@ void	echo_f(t_node *data)
 	if (flag == 1)
 		return ;
 	write(fd_out, "\n", 1);
-	data->exit_status = 0;
+	g_exit_status = 0;
 }
 
 int	buildin_2(t_node *data)

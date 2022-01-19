@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 22:23:15 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/18 18:40:12 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 01:26:15 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ char	*parser_redir(char *line, t_node *data)
 	i = -1;
 	while (data->is_err == 0 && line[++i])
 	{
+		if (line[i] == '\'' || line[i] == '\"')
+		{
+			i++;
+			while (line[i] && (line[i] != '\'' || line[i] != '\"'))
+				i++;
+		}
 		if (line[i] == '<' && line[i + 1] == '<')
 		{
 			line = ft_heredoc(line, i, data);

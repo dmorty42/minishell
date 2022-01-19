@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/18 20:09:57 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/19 20:15:33 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,19 @@ typedef struct s_node
 	t_her			her;
 }	t_node;
 
+int	g_exit_status;
+
 void				rl_replace_line(const char *a, int b);
 t_env				*parse_env(t_node *data, char **str);
 int					ft_bigstr_len(char **str);
 void				check_syntax(char *line, t_node *data);
 char				*space_prepare(char *line);
-void				parser(char *line, t_env *env, t_node *data);
+void				parser(char *line, t_node *data);
 char				*ft_gap(char *line, int *i);
 char				*ft_gap2(char *line, int *i, t_env *env);
 char				*ft_slash(char *line, int *i);
 char				*ft_dollar(char *line, int *i, t_env *env);
+char				*ft_exsts(char *line, int *i);
 char				*ft_del_space(char *line, int *i);
 int					ft_bigstr_len(char **str);
 int					ifkey(char c);
@@ -92,6 +95,7 @@ void				cycle_clean(t_node *data, int flag);
 void				execute_cmd(t_node *data, char **env);
 char				**lst_to_array(t_node *data);
 void				signal_work(void);
+void				signal_work2(void);
 void				sig_handler(int sig);
 void				parse_path(t_node *data);
 char				*ft_redirect(char *line, int *i, t_node *data);
@@ -127,4 +131,5 @@ char				*find_old_pwd(t_node *data);
 unsigned long long	ft_atoi_long(const char *str);
 char				**export_malloc(t_env *tmp, int i, t_node *data);
 char				*export_value(t_env *tmp, t_node *data, int i, int j);
+void				again_check_quotes(char *line, int *i);
 #endif

@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:38:19 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/18 16:51:54 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 20:30:30 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	execute_cmd(t_node *data, char **env)
 	if (pid != 0)
 	{
 		waitpid(pid, &i, 0);
-		data->exit_status = i / 256;
+		g_exit_status = i / 256;
 	}
-	if (pid > 0 && data->pipe_num < data->is_pipe - 1)
+	if (data->pipe_num < data->is_pipe - 1)
 		execute_pipe(data, env);
 }

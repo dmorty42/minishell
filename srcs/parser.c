@@ -6,55 +6,35 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 19:58:46 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/18 18:50:52 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/19 19:53:58 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	count_space(char *line)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (line[i])
-	{
-		if ((line[i + 1] && line[i] != ' ' ) || line[i + 1] != ' ')
-			j++;
-		i++;
-	}
-	return (j);
-}
-
 char	*space_prepare(char *line)
 {
-	int		i;
-	int		j;
-	char	*temp;
-	char	*temp2;
+	int	i;
 
-	i = -1;
-	j = 0;
-	temp = (char *)malloc(count_space(line) + 1);
-	while (line[++i])
+	i = 0;
+	while (line[i] == ' ')
+		line = ft_del_space(line, &i);
+	while (line[i])
 	{
-		if ((line[i + 1] && line[i] != ' ' ) || line[i + 1] != ' ')
+		if (line[i] == '\'' || line[i] == '\"')
 		{
-			temp[j] = line[i];
-			j++;
+			i++;
+			while ((line[i] != '\'' || line[i] != '\"') && line[i])
+				i++;
 		}
+		if (line[i + 1] && line[i] == ' ' && line[i + 1] == ' ')
+		{
+			line = ft_del_space(line, &i);
+			i = 0;
+		}
+		i++;
 	}
-	temp[j] = '\0';
-	free(line);
-	if (temp[0] == ' ')
-	{
-		temp2 = ft_strdup(temp + 1);
-		free(temp);
-		return (temp2);
-	}
-	return (temp);
+	return (line);
 }
 
 char	*ft_tilde(char *line, int *i, t_node *data)
@@ -76,7 +56,23 @@ char	*ft_tilde(char *line, int *i, t_node *data)
 	return (temp);
 }
 
-char	*trick(char *line, int *i, t_node *data, t_env *env)
+char	*ft_exsts(char *line, int *i)
+{
+	char	*temp;
+	char	*temp1;
+
+	temp = ft_substr(line, 0, *i);
+	temp1 = ft_itoa(g_exit_status);
+	temp = ft_strjoin_free(temp, temp1);
+	free(temp1);
+	temp1 = ft_strdup(line + *i + 2);
+	temp = ft_strjoin_free(temp, temp1);
+	free(temp1);
+	free(line);
+	return (temp);
+}
+
+char	*trick(char *line, int *i, t_node *data)
 {
 	if (line[*i] == '~')
 		return (ft_tilde(line, i, data));
@@ -85,13 +81,15 @@ char	*trick(char *line, int *i, t_node *data, t_env *env)
 	if (line[*i] == '\\')
 		return (ft_slash(line, i));
 	if (line[*i] == '\"')
-		return (ft_gap2(line, i, env));
+		return (ft_gap2(line, i, data->env_lst));
+	if (line[*i] == '$' && line[*i + 1] == '?')
+		return (ft_exsts(line, i));
 	if (line[*i] == '$')
-		return (ft_dollar(line, i, env));
+		return (ft_dollar(line, i, data->env_lst));
 	return (line);
 }
 
-void	parser(char *line, t_env *env, t_node *data)
+void	parser(char *line, t_node *data)
 {
 	int		i;
 	int		t;
@@ -103,7 +101,7 @@ void	parser(char *line, t_env *env, t_node *data)
 	line = parser_redir(line, data);
 	while (data->is_err == 0 && line[++i])
 	{
-		line = trick(line, &i, data, env);
+		line = trick(line, &i, data);
 		if (line[i] == ' ')
 		{
 			data->cmd = two_dim_work(data->cmd, ft_substr(line, t, i - t), &j);

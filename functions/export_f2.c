@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_f2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 20:11:51 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 19:46:37 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:25:57 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,5 @@ void	export_f2(t_node *data)
 	}
 	data->env_exp[i] = NULL;
 	export_f2_next(data);
-	data->exit_status = 0;
+	g_exit_status = 0;
 }
