@@ -6,129 +6,59 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 20:11:51 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/19 19:25:57 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/20 05:14:51 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	quotes_add_2(t_node *data, int i, int j)
+void	export_put_msg(t_env *temp, int fd_out, int *i)
 {
-	char	*tmp;
-	char	*tmp2;
-
-	if (data->env_lst->key && data->env_lst->value)
+	if (temp->flag == *i)
 	{
-		tmp = ft_substr(data->env_exp[i], 0, j + 1);
-		tmp2 = data->env_exp[i];
-		data->env_exp[i] = ft_strdup(tmp2 + j + 1);
-		free(tmp2);
-		tmp2 = data->env_exp[i];
-		data->env_exp[i] = ft_strjoin("\"", tmp2);
-		data->env_exp[i] = ft_strjoin_free(data->env_exp[i], "\"");
-		free(tmp2);
-		tmp2 = data->env_exp[i];
-		data->env_exp[i] = ft_strjoin_free(tmp, tmp2);
-		free(tmp2);
+		write(fd_out, "declare -x ", 11);
+		ft_putstr_fd(temp->key, fd_out);
+		if (temp->eq == 1)
+			write(fd_out, "=\"", 2);
+		if (temp->value)
+			ft_putstr_fd(temp->value, fd_out);
+		if (temp->eq == 1)
+			write(fd_out, "\"", 1);
+		write(fd_out, "\n", 1);
+		*i += 1;
 	}
-}
-
-static void	quotes_add(t_node *data)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = -1;
-	while (data->env_exp[++i])
-	{
-		j = 0;
-		while (data->env_exp[i][j] != '=' && data->env_exp[i][j])
-			++j;
-		if (!data->env_exp[i][j])
-			continue ;
-		quotes_add_2(data, i, j);
-	}
-}
-
-static int	export_f2_nn(t_node *data, int i, int j)
-{
-	char	*tmp;
-
-	while (data->env_exp[i][j] == data->env_exp[i + 1][j])
-		++j;
-	if (data->env_exp[i][j] > data->env_exp[i + 1][j]
-		&& data->env_exp[i][j] != '=' && data->env_exp[i + 1][j] != '='
-		&& data->env_exp[i][j] && data->env_exp[i + 1][j])
-	{
-		tmp = data->env_exp[i];
-		data->env_exp[i] = data->env_exp[i + 1];
-		data->env_exp[i + 1] = tmp;
-		i = 0;
-	}
-	else if (data->env_exp[i + 1][j] == '=' || !data->env_exp[i + 1][j])
-	{
-		tmp = data->env_exp[i];
-		data->env_exp[i] = data->env_exp[i + 1];
-		data->env_exp[i + 1] = tmp;
-		i = 0;
-	}
-	else
-		i++;
-	return (i);
-}
-
-static void	export_f2_next(t_node	*data)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-
-	i = 0;
-	while (data->env_exp[i + 1])
-	{
-		j = 0;
-		if (data->env_exp[i][j] > data->env_exp[i + 1][j])
-		{
-			tmp = data->env_exp[i];
-			data->env_exp[i] = data->env_exp[i + 1];
-			data->env_exp[i + 1] = tmp;
-			i = 0;
-		}
-		else if (data->env_exp[i][j] == data->env_exp[i + 1][j])
-			i = export_f2_nn(data, i, j);
-		else
-			++i;
-	}
-	quotes_add(data);
-	ft_declare(data);
 }
 
 void	export_f2(t_node *data)
 {
 	int		i;
-	t_env	*tmp;
-	char	*ctmp;
+	int		x;
+	t_env	*temp;
+	int		fd_out;
 
-	ctmp = NULL;
-	i = 0;
-	tmp = data->env_lst;
-	data->env_exp = export_malloc(tmp, i, data);
-	while (tmp)
+	temp = data->env_lst;
+	i = 1;
+	fd_out = 1;
+	x = 0;
+	change_out(data, &fd_out);
+	while (i < ft_env_size(data->env_lst) + 1)
 	{
-		if (tmp->flag == 0)
+		if (x > 100)
 		{
-			if (tmp->key && tmp->value)
-			{
-				ctmp = ft_strjoin(tmp->key, "=");
-				data->env_exp[i++] = ft_strjoin_free(ctmp, tmp->value);
-			}
-			else
-				data->env_exp[i++] = ft_strdup(tmp->key);
-			tmp = tmp->next;
+			i++;
+			x = 0;
 		}
+		export_put_msg(temp, fd_out, &i);
+		temp = temp->next;
+		if (!temp)
+			temp = data->env_lst;
+		x++;
 	}
-	data->env_exp[i] = NULL;
-	export_f2_next(data);
-	g_exit_status = 0;
+}
+
+void	export_err(char *str)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\': not a valid identifier\n", 2);
 }

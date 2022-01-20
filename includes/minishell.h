@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:00:18 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/19 20:15:33 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/20 05:08:55 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define LEFT 1
 # define RIGHT 2
 # define X_RIGHT 3
+# define X_MAX 0	
+# define X_MIN 1
 
 typedef struct s_env
 {
@@ -32,6 +34,7 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 	int				flag;
+	int				eq;
 }	t_env;
 
 typedef struct s_red
@@ -132,4 +135,8 @@ unsigned long long	ft_atoi_long(const char *str);
 char				**export_malloc(t_env *tmp, int i, t_node *data);
 char				*export_value(t_env *tmp, t_node *data, int i, int j);
 void				again_check_quotes(char *line, int *i);
+int					check_path(t_node *data);
+t_env				*find_min(t_env *env, int flag);
+int					ft_env_size(t_env *env);
+void				export_err(char *str);
 #endif

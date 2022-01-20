@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_add.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprovolo <bprovolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 20:10:34 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/18 19:16:38 by bprovolo         ###   ########.fr       */
+/*   Updated: 2022/01/20 03:25:16 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,21 @@ t_env	*export_add2(t_node *data, int j, int i, t_env	*tmp)
 void	export_add(t_node *data, int j, int i)
 {
 	t_env	*tmp;
-	char	*ctmp;
+	int		x;
 
-	tmp = data->env_lst;
-	while (tmp)
+	tmp = (t_env *)malloc(sizeof(t_env));
+	tmp->key = ft_substr(data->cmd[i], 0, j);
+	tmp->flag = ft_env_size(data->env_lst) + 1;
+	tmp->next = NULL;
+	j += 1;
+	x = j;
+	if (data->cmd[i][j])
 	{
-		if (tmp->key[j] == '\0')
-		{
-			ctmp = ft_substr(data->cmd[i], 0, j);
-			if (!ft_strcmp(tmp->key, ctmp))
-				break ;
-			free(ctmp);
-		}
-		tmp = tmp->next;
-	}
-	if (!tmp)
-	{
-		tmp = export_add2(data, j, i, tmp);
-		ft_lstadd_back_env(&data->env_lst, tmp);
+		while (data->cmd[i][j])
+			j++;
+		tmp->value = ft_substr(data->cmd[i], x, j - x);
 	}
 	else
-	{
-		free(ctmp);
-		tmp->flag = 0;
-	}
+		tmp->value = NULL;
+	ft_lstadd_back_env(&data->env_lst, tmp);
 }

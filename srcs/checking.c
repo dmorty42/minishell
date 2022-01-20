@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 18:29:07 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/19 21:24:27 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/20 05:16:23 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,39 @@ void	check_double_semi(char *line, t_node *data)
 	int	i;
 
 	i = -1;
-	while (line[++i + 1])
+	while (line[++i])
 	{
-		if (line[i] == ';' && line[i + 1] == ';')
+		if (line[i] == ';')
 		{
-			printf("minishell: syntax error near unexpected token ';;'\n");
-			data->is_err += 1;
+			i++;
+			while (line[i] == ' ')
+				i++;
+			if (line[i] == ';')
+			{
+				printf("minishell: syntax error near unexpected token ';;'\n");
+				data->is_err += 1;
+			}
+		}
+	}
+}
+
+void	check_double_pipe(char *line, t_node *data)
+{
+	int	i;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] == '|')
+		{
+			i++;
+			while (line[i] == ' ')
+				i++;
+			if (line[i] == '|')
+			{
+				printf("minishell: syntax error near unexpected token '||'\n");
+				data->is_err += 1;
+			}
 		}
 	}
 }
@@ -85,4 +112,6 @@ void	check_syntax(char *line, t_node *data)
 	}
 	if (data->is_err == 0)
 		check_double_semi(line, data);
+	if (data->is_err == 0)
+		check_double_pipe(line, data);
 }

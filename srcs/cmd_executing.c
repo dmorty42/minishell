@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 02:38:19 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/19 20:30:30 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/20 05:28:18 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	find_binary(t_node *data)
 
 	i = -1;
 	temp = NULL;
-	while (++i < 10)
+	while (++i < 8)
 	{
 		temp = NULL;
 		if (data->cmd[0][0] != '/')

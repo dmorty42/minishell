@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 23:07:24 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/19 21:29:14 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/20 05:36:12 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,13 @@ void	env_f(t_node *data)
 		fd_out = data->fd[data->pipe_num][1];
 	while (temp)
 	{
-		if (!temp->flag)
-		{	
-			if (temp->key && temp->value)
-			{
-				ft_putstr_fd(temp->key, fd_out);
-				write(fd_out, "=", 1);
+		if (temp->key && temp->eq)
+		{
+			ft_putstr_fd(temp->key, fd_out);
+			write(fd_out, "=", 1);
+			if (temp->value)
 				ft_putstr_fd(temp->value, fd_out);
-				write(fd_out, "\n", 1);
-			}
+			write(fd_out, "\n", 1);
 		}
 		temp = temp->next;
 	}

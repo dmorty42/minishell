@@ -6,52 +6,11 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:00:49 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/19 19:25:57 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/20 05:20:56 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-t_env	*cmd_tmp(t_node *data, int j, int i)
-{
-	t_env	*tmp;
-	char	*ctmp;
-
-	tmp = data->env_lst;
-	if (j - 1 >= 0 && data->cmd[i][j - 1] == '+')
-		--j;
-	while (tmp)
-	{
-		if (tmp->key[j] == '\0')
-		{
-			ctmp = ft_substr(data->cmd[i], 0, j);
-			if (!ft_strcmp(tmp->key, ctmp))
-			{
-				free (ctmp);
-				break ;
-			}
-			free(ctmp);
-		}
-		tmp = tmp->next;
-	}
-	return (tmp);
-}
-
-static void	export_sub(int j, t_node *data, t_env *tmp, int i)
-{
-	char	*ctmp;
-
-	if (j - 1 >= 0 && data->cmd[i][j - 1] == '+')
-	{
-		ctmp = ft_strdup(data->cmd[i] + j + 1);
-		tmp->value = ft_strjoin_free(tmp->value, ctmp);
-		free(ctmp);
-		return ;
-	}
-	free(tmp->value);
-	tmp->value = ft_strdup(&data->cmd[i][j + 1]);
-	return ;
-}
 
 int	check_export(t_node *data, int i)
 {
@@ -71,29 +30,80 @@ int	check_export(t_node *data, int i)
 	return (0);
 }
 
-static void	export_equals(t_node *data, int j, int i)
+static void	export_equals(t_node *data, int j, int i, int e)
 {
 	t_env	*tmp;
+	int		x;
 
-	tmp = cmd_tmp(data, j, i);
-	if (tmp)
+	tmp = (t_env *)malloc(sizeof(t_env));
+	tmp->key = ft_substr(data->cmd[i], 0, j);
+	tmp->flag = ft_env_size(data->env_lst) + 1;
+	tmp->next = NULL;
+	tmp->eq = e;
+	j += 1;
+	x = j;
+	if (data->cmd[i][j])
 	{
-		export_sub(j, data, tmp, i);
-		return ;
+		while (data->cmd[i][j])
+			j++;
+		tmp->value = ft_substr(data->cmd[i], x, j - x);
 	}
-	tmp = ft_lstnew_env();
-	if (data->cmd[i][j - 1] == '+' && data->cmd[i][j] == '=')
+	else
+		tmp->value = NULL;
+	ft_lstadd_back_env(&data->env_lst, tmp);
+}
+
+int	rewrite_env(t_node *data, t_env *env, int i)
+{
+	int		j;
+	char	*temp;
+
+	j = 0;
+	while (data->cmd[i][j] && data->cmd[i][j] != '=' && data->cmd[i][j] != '+')
+		j++;
+	if (data->cmd[i][j] == '=' && data->cmd[i][j + 1])
 	{
-		tmp->key = ft_substr(data->cmd[i], 0, j - 1);
-		tmp->value = export_value(tmp, data, i, j);
+		free(env->value);
+		env->value = ft_substr(data->cmd[i], j + 1, \
+			ft_strlen(data->cmd[i]) - j + 1);
+	}
+	else if (data->cmd[i][j] == '+' && data->cmd[i][j + 2])
+	{
+		temp = ft_substr(data->cmd[i], j + 2, ft_strlen(data->cmd[i]) - j + 1);
+		env->value = ft_strjoin_free(env->value, temp);
+		free(temp);
 	}
 	else
 	{
-		tmp->key = ft_substr(data->cmd[i], 0, j);
-		tmp->value = ft_strdup(&data->cmd[i][j + 1]);
+		free(env->value);
+		env->value = NULL;
 	}
-	tmp->flag = 0;
-	ft_lstadd_back_env(&data->env_lst, tmp);
+	env->eq = 1;
+	return (0);
+}
+
+int	overwrite_env(t_node *data, int i)
+{
+	t_env	*temp;
+	char	*str;
+	int		j;
+
+	j = 0;
+	while (data->cmd[i][j] && data->cmd[i][j] != '=' && data->cmd[i][j] != '+')
+		j++;
+	temp = data->env_lst;
+	str = ft_substr(data->cmd[i], 0, j);
+	while (temp)
+	{
+		if (!ft_strcmp(str, temp->key))
+		{
+			free(str);
+			return (rewrite_env(data, temp, i));
+		}
+		temp = temp->next;
+	}
+	free(str);
+	return (1);
 }
 
 void	export_f(t_node *data)
@@ -101,24 +111,25 @@ void	export_f(t_node *data)
 	int	i;
 	int	j;
 
-	j = 0;
 	i = 0;
 	while (data->cmd[++i])
 	{
+		j = 0;
 		if (check_export(data, i) != 0)
 		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(data->cmd[i], 2);
-			ft_putstr_fd("\': not a valid identifier\n", 2);
+			export_err(data->cmd[i]);
 			g_exit_status = 1;
 			continue ;
 		}
-		while (data->cmd[i][j] != '=' && data->cmd[i][j])
-			++j;
-		if (data->cmd[i][j])
-			export_equals(data, j, i);
-		else
-			export_add(data, j, i);
+		if (overwrite_env(data, i))
+		{
+			while (data->cmd[i][j] && data->cmd[i][j] != '=')
+				++j;
+			if (data->cmd[i][j])
+				export_equals(data, j, i, 1);
+			else
+				export_equals(data, j, i, 0);
+		}
 		g_exit_status = 0;
 	}
 }

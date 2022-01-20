@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 20:19:11 by dmorty            #+#    #+#             */
-/*   Updated: 2022/01/19 20:09:08 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/20 05:26:43 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,12 @@ int	ifkey(char c)
 
 char	*find_value(char *key, t_env *env)
 {
-	int		i;
 	t_env	*temp;
 
 	temp = env;
-	i = ft_strlen(key);
 	while (temp)
 	{
-		if (!ft_strncmp(key, temp->key, i))
+		if (!ft_strcmp(key, temp->key))
 		{
 			free(key);
 			return (temp->value);
@@ -60,4 +58,15 @@ char	*ft_del_space(char *line, int *i)
 	free(line);
 	free(temp2);
 	return (temp);
+}
+
+int	check_path(t_node *data)
+{
+	if (!data->path)
+	{
+		g_exit_status = 127;
+		printf("minishell: %s: No such file or directory\n", data->cmd[0]);
+		exit(127);
+	}
+	return (1);
 }
