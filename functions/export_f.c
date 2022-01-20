@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:00:49 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/20 05:20:56 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/20 18:18:39 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ static void	export_equals(t_node *data, int j, int i, int e)
 	int		x;
 
 	tmp = (t_env *)malloc(sizeof(t_env));
-	tmp->key = ft_substr(data->cmd[i], 0, j);
+	if (data->cmd[i][j - 1] == '+')
+		tmp->key = ft_substr(data->cmd[i], 0, j - 1);
+	else
+		tmp->key = ft_substr(data->cmd[i], 0, j);
 	tmp->flag = ft_env_size(data->env_lst) + 1;
 	tmp->next = NULL;
 	tmp->eq = e;

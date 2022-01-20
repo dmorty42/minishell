@@ -6,7 +6,7 @@
 /*   By: dmorty <dmorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 20:11:51 by bprovolo          #+#    #+#             */
-/*   Updated: 2022/01/20 05:14:51 by dmorty           ###   ########.fr       */
+/*   Updated: 2022/01/20 18:03:47 by dmorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	export_f2(t_node *data)
 	change_out(data, &fd_out);
 	while (i < ft_env_size(data->env_lst) + 1)
 	{
-		if (x > 100)
+		if (x > 1000)
 		{
 			i++;
 			x = 0;
